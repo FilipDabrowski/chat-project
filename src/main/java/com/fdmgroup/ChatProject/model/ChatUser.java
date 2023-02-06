@@ -1,7 +1,5 @@
 package com.fdmgroup.ChatProject.model;
 
-public class Message {
+public class ChatUser {
 
-
-	
 }

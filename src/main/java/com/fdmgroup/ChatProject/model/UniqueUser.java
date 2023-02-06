@@ -2,12 +2,14 @@ package com.fdmgroup.ChatProject.model;
 
 import java.util.Objects;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@Entity
 public class UniqueUser {
-	@Entity
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
