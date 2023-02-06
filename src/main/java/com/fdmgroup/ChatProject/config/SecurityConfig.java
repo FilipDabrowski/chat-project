@@ -8,7 +8,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import com.fmdgroup.vatcher.security.AuthProviderImpl;
+import com.fdmgroup.ChatProject.security.AuthProviderImpl;
+
+
 
 
 
