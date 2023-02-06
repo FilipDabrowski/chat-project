@@ -17,9 +17,15 @@ public class UniqueUser {
 	private String password;
 	private String name; 
 	private String emailAdress;
-	
+	private String role;
 		
 	
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(emailAdress, id, name, password);
