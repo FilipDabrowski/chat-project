@@ -15,18 +15,20 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import com.fmdgroup.vatcher.services.SingleUserDetailsService;
+import com.fdmgroup.ChatProject.service.UniqueUserDetailsService;
+
+
 @Component
 
 public class AuthProviderImpl implements AuthenticationProvider {
 
 		
-		private final SingleUserDetailsService singleUserDetailsService;
+		private final UniqueUserDetailsService singleUserDetailsService;
 		
 
 		
 		//@Autowired
-		public AuthProviderImpl(SingleUserDetailsService singleUserDetailsService) {
+		public AuthProviderImpl(UniqueUserDetailsService singleUserDetailsService) {
 			
 			this.singleUserDetailsService = singleUserDetailsService;
 			
