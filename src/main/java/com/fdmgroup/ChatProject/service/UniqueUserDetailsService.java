@@ -13,9 +13,7 @@ import org.springframework.stereotype.Service;
 import com.fdmgroup.ChatProject.model.UniqueUser;
 import com.fdmgroup.ChatProject.repository.UniqueUserRepository;
 import com.fdmgroup.ChatProject.security.UniqueUserDetails;
-import com.fmdgroup.vatcher.model.SingleUser;
-import com.fmdgroup.vatcher.repositories.UserRepository;
-import com.fmdgroup.vatcher.security.SingleUserDetails;
+
 
 
 @Service
@@ -74,14 +72,14 @@ public class UniqueUserDetailsService implements UserDetailsService {
 	   return authentication;
    }
 	
-	public SingleUser findUserFromCurrentSession() {
+	public UniqueUser findUserFromCurrentSession() {
 		String email = getAuthenticationObject().getName();
 		Optional<UniqueUser> uniqueUser = uniqueUserRepository.findByEmail(email);
 		
 		if (uniqueUser.isPresent()) {
 			UserDetails userDetails =  new UniqueUserDetails(uniqueUser.get());
-			SingleUserDetails singleUserDetails1 = (SingleUserDetails) userDetails;
-			return singleUserDetails1.getSingleUser();
+			UniqueUserDetails uniqueUserDetails1 = (UniqueUserDetails) userDetails;
+			return uniqueUserDetails1.getUniqueUser();
 		}
 		
 		throw new UsernameNotFoundException("User not found");
