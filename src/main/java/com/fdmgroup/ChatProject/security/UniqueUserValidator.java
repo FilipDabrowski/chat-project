@@ -7,32 +7,34 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import com.fmdgroup.vatcher.model.SingleUser;
-import com.fmdgroup.vatcher.services.SingleUserDetailsService;
+import com.fdmgroup.ChatProject.model.UniqueUser;
+import com.fdmgroup.ChatProject.service.UniqueUserDetailsService;
+
+
 @Component
 public class UniqueUserValidator implements Validator {
 	
 	
 	
-		private final UniqueUserDetailsService singleUserDetailsService;
+		private final UniqueUserDetailsService uniqueUserDetailsService;
 		
 		@Autowired
-		public UniqueUserValidator(SingleUserDetailsService singleUserDetailsService) {
+		public UniqueUserValidator(UniqueUserDetailsService singleUserDetailsService) {
 		
-			this.singleUserDetailsService = singleUserDetailsService;
+			this.uniqueUserDetailsService = singleUserDetailsService;
 		}
 
 		@Override
 		public boolean supports(Class<?> clazz) {
 			
-			return SingleUser.class.equals(clazz);
+			return UniqueUser.class.equals(clazz);
 		}
 
 		@Override
 		public void validate(Object target, Errors errors) {
-			SingleUser singleUser = (SingleUser) target;
+			UniqueUser uniqueUser = (UniqueUser) target;
 			try {
-				singleUserDetailsService.loadUserByUsername(singleUser.getEmail());
+				uniqueUserDetailsService.loadUserByUsername(uniqueUser.getEmailAdress());
 			}catch(UsernameNotFoundException ignored) {
 				return;
 			}
@@ -42,4 +44,4 @@ public class UniqueUserValidator implements Validator {
 
 	}
 
-}
+
