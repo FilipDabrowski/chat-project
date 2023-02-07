@@ -36,13 +36,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			
 			http.csrf().disable()// disable tokenization
 			.authorizeRequests()
-			.antMatchers("/**").permitAll()
+		//	.antMatchers("/**").permitAll()
 			.antMatchers("/admin").hasRole("ADMIN")
 			.antMatchers("/authorize").hasAnyRole("SIMPLE_USER","ADMIN")
 			.antMatchers("/auth/login", "/auth/registration", "/error").permitAll()
 			.antMatchers("/auth/login", "/auth/registration", "/error", "/auth/change-password", "/css/**").permitAll()
 			.antMatchers("/**/*.js", "/**/*.css").permitAll()
-			.anyRequest().hasAnyRole("TRAINEE","ADMIN")
+			.anyRequest().hasAnyRole("SIMPLE_USER","ADMIN")
 			.and()
 			.formLogin().loginPage("/auth/login")
 			.loginProcessingUrl("/process_login")

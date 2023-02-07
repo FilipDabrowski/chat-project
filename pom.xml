@@ -63,8 +63,16 @@
 			<scope>test</scope>
 		</dependency>
 
-<!-- for jsp files-->
-			<dependency>
+
+
+<!-- for working with jsp files-->
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 		</dependency>

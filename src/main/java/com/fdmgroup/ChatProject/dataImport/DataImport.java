@@ -21,22 +21,22 @@ public class DataImport implements ApplicationRunner {
 		
 		UniqueUser userOne = new UniqueUser();
 		userOne.setEmailAdress("userOne@blabla.bla");
-		userOne.setName("User One");
+		userOne.setName("UserOne");
 		userOne.setPassword("1");
-		userOne.setRole("SIMPLE_USER");
+		userOne.setRole("ROLE_SIMPLE_USER");
 		
 		
 		UniqueUser userTwo = new UniqueUser();
 		userOne.setEmailAdress("userTwo@blabla.bla");
-		userOne.setName("User Two");
+		userOne.setName("UserTwo");
 		userOne.setPassword("2");
-		userOne.setRole("SIMPLE_USER");
+		userOne.setRole("ROLE_SIMPLE_USER");
 		
 		UniqueUser userAdmin = new UniqueUser();
 		userOne.setEmailAdress("userAdmin@blabla.bla");
-		userOne.setName("User Admin");
+		userOne.setName("UserAdmin");
 		userOne.setPassword("admin");
-		userOne.setRole("ADMIN");
+		userOne.setRole("ROLE_ADMIN");
 		
 		uniqueUserService.save(userOne);
 		uniqueUserService.save(userTwo);
