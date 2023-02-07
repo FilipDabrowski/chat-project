@@ -18,6 +18,8 @@ import org.springframework.stereotype.Component;
 import com.fdmgroup.ChatProject.service.UniqueUserDetailsService;
 
 
+
+
 @Component
 
 public class AuthProviderImpl implements AuthenticationProvider {
@@ -39,10 +41,10 @@ public class AuthProviderImpl implements AuthenticationProvider {
 		public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 			System.out.println("Auteticate method/ AuthProviderimpl start");
 			//String name = authentication.getName();
-			String email = authentication.getName();
+			String emailAdress = authentication.getName();
 			singleUserDetailsService.setAuthenticationObject(authentication);
 			
-			UserDetails singleUserDetails = singleUserDetailsService.loadUserByUsername(email);
+			UserDetails singleUserDetails = singleUserDetailsService.loadUserByUsername(emailAdress);
 			
 			String password = authentication.getCredentials().toString();
 			

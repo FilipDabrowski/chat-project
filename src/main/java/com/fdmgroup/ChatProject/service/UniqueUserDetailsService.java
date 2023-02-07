@@ -16,6 +16,7 @@ import com.fdmgroup.ChatProject.security.UniqueUserDetails;
 
 
 
+
 @Service
 public class UniqueUserDetailsService implements UserDetailsService {
 
@@ -39,7 +40,7 @@ public class UniqueUserDetailsService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		Optional<UniqueUser> uniqueUser = uniqueUserRepository.findByEmail(email);
+		Optional<UniqueUser> uniqueUser = uniqueUserRepository.findByEmailAdress(email);
 		System.out.println("UniqueUserDetailsService class is working/ loadUserByUsername ");
 		
 		if (uniqueUser.isEmpty()) {
@@ -51,7 +52,7 @@ public class UniqueUserDetailsService implements UserDetailsService {
 	
 	
 	public UserDetails loadUserByEmailForPasswordChange(String email) throws UsernameNotFoundException {
-		Optional<UniqueUser> uniqueUser = uniqueUserRepository.findByEmail(email);
+		Optional<UniqueUser> uniqueUser = uniqueUserRepository.findByEmailAdress(email);
 
 		if (uniqueUser.isPresent()) {
 			return new UniqueUserDetails(uniqueUser.get());
@@ -74,7 +75,7 @@ public class UniqueUserDetailsService implements UserDetailsService {
 	
 	public UniqueUser findUserFromCurrentSession() {
 		String email = getAuthenticationObject().getName();
-		Optional<UniqueUser> uniqueUser = uniqueUserRepository.findByEmail(email);
+		Optional<UniqueUser> uniqueUser = uniqueUserRepository.findByEmailAdress(email);
 		
 		if (uniqueUser.isPresent()) {
 			UserDetails userDetails =  new UniqueUserDetails(uniqueUser.get());
