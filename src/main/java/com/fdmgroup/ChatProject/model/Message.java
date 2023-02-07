@@ -1,5 +1,6 @@
 package com.fdmgroup.ChatProject.model;
 
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -98,11 +99,5 @@ public class Message {
 		return "Message [message=" + message + ", timestamp=" + timestamp + ", sender=" + sender + ", chat=" + chat
 				+ "]";
 	}
-	
-	
-	
-	
-	
-	
 	
 }

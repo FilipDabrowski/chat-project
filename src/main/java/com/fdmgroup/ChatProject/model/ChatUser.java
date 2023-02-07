@@ -1,5 +1,6 @@
 package com.fdmgroup.ChatProject.model;
 
+
 import java.util.Collection;
 import java.util.Objects;
 import java.util.TreeSet;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+
 
 @Entity
 public class ChatUser {
@@ -117,8 +119,6 @@ public class ChatUser {
 	}
 	
 	
-	
+}	
 
-	
-	
-}
+

@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 
+
 @Entity
 public class Chat {
 

@@ -9,7 +9,7 @@ import com.fdmgroup.ChatProject.model.UniqueUser;
 
 public interface UniqueUserRepository extends JpaRepository<UniqueUser, Long> {
 
-	Optional<UniqueUser> findByEmail(String email);
+	Optional<UniqueUser> findByEmail(String emailAdress);
 
 	Optional<UniqueUser> findByName(String name);
 
