@@ -2,6 +2,7 @@ package com.fdmgroup.ChatProject.model;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,7 +17,8 @@ public class UniqueUser {
 	private Long id;
 	private String password;
 	private String name; 
-	private String emailAdress;
+	 @Column(unique = true)
+	  private String emailAdress;
 	private String role;
 		
 	
