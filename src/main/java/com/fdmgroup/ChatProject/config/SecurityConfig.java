@@ -36,7 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			
 			http.csrf().disable()// disable tokenization
 			.authorizeRequests()
-		//	.antMatchers("/**").permitAll()
+			.antMatchers("/h2/**").permitAll()
+			.antMatchers("/**").permitAll()
 			.antMatchers("/admin").hasRole("ADMIN")
 			.antMatchers("/authorize").hasAnyRole("SIMPLE_USER","ADMIN")
 			.antMatchers("/auth/login", "/auth/registration", "/error").permitAll()
@@ -44,10 +45,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/**/*.js", "/**/*.css").permitAll()
 			.anyRequest().hasAnyRole("SIMPLE_USER","ADMIN")
 			.and()
+			.headers().frameOptions().disable().and()
 			.formLogin().loginPage("/auth/login")
 			.loginProcessingUrl("/process_login")
 			.defaultSuccessUrl("/authorize", true)
-			.failureUrl("/auth/login?error")
+			.failureUrl("/auth/login?error")			
 			.and()
 			.csrf()
 			.disable()
