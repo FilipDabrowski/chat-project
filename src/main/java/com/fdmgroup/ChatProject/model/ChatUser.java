@@ -5,10 +5,13 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.TreeSet;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
@@ -18,6 +21,7 @@ public class ChatUser {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="chatUser_id")
 	private Long id;
 	
 	private String nickName;
@@ -25,13 +29,25 @@ public class ChatUser {
 	@OneToOne
 	private UniqueUser user;
 	
+	//what is the best approach
+	//should this be bi-directional?  and then how?
 	@ManyToMany
+	@JoinTable(name = "CHATUSER_FRIENDS_JOIN_TABLE",
+			joinColumns = @JoinColumn(name = "CHATUSER_ID", referencedColumnName = "chatUser_id"),
+			inverseJoinColumns = @JoinColumn(name = "FRIEND_ID", referencedColumnName = "chatUser_id"))
 	private Collection<ChatUser> friendList;
 
+	//this should be uni-directional
 	@ManyToMany
+	@JoinTable(name = "CHATUSER_BLOCKEDUSER_JOIN_TABLE",
+			joinColumns = @JoinColumn(name = "CHATUSER_ID", referencedColumnName = "chatUser_id"),
+			inverseJoinColumns = @JoinColumn(name = "BLOCKEDUSER_ID", referencedColumnName = "chatUser_id"))
 	private Collection<ChatUser> blockedUsers;
 
 	@ManyToMany
+	@JoinTable(name = "CHATUSER_CHAT_JOIN_TABLE",
+			joinColumns = @JoinColumn(name = "CHATUSER_ID", referencedColumnName = "chatUser_id"),
+			inverseJoinColumns = @JoinColumn(name = "CHAT_ID", referencedColumnName = "chat_id"))
 	private Collection<Chat> chats;
 	
 

@@ -17,8 +17,10 @@ public class UniqueUser {
 	private Long id;
 	private String password;
 	private String name; 
-	 @Column(unique = true)
-	  private String emailAdress;
+	
+	@Column(unique = true)
+	private String emailAdress;
+	 
 	private String role;
 		
 	

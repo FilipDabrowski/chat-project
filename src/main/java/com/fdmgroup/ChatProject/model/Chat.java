@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,11 +19,12 @@ public class Chat {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "chat_id")
 	private Long id;
 	
 	private String chatName;
 
-	@ManyToMany
+	@ManyToMany(mappedBy = "chats")
 	private Collection<ChatUser> chattingUsers;
 
 	private LocalDateTime starttimeOfChat;

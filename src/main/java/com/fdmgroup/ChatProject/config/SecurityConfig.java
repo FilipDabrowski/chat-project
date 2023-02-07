@@ -36,6 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			
 			http.csrf().disable()// disable tokenization
 			.authorizeRequests()
+			.antMatchers("/**").permitAll()
 			.antMatchers("/admin").hasRole("ADMIN")
 			.antMatchers("/authorize").hasAnyRole("USER","ADMIN")
 			.antMatchers("/auth/login", "/auth/registration", "/error").permitAll()
