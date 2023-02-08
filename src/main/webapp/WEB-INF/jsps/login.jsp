@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-15"
 	pageEncoding="ISO-8859-15"%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset=ISO-8859-15>
-<title>Login</title> 
+<title>Chatty-Login</title> 
 <style>
 body {
 	display: flex;
@@ -84,7 +84,7 @@ section {
 			name="password" placeholder="Password"> <br>
 		<button type="submit">Log in</button>
 		<div class="error">
-			<p th:if="${error}" th:text="${error}"></p>
+			<p> <c:if test="${errorMessage}">${errorMessage}</c:if></p>
 		</div>
 	</form>
 	<section>
@@ -92,6 +92,7 @@ section {
 			<div class="container signin">
 	<p>Don't have an account yet?</p>
 	<a href="/register">Register here</a>
+	</div>
 	</section>
 </main>
 </body>

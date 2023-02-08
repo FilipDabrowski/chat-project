@@ -1,0 +1,25 @@
+header {
+	position: fixed;
+}
+
+.header-main {
+	display: flex;
+	background-image: linear-gradient(black,blue);
+	align-items: center;
+	justify-content: center;
+}
+
+.header-heading{
+	color: silver;
+}
+
+.header-button{
+	margin: 5px;
+}
+
+.header-forms{
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	}
+

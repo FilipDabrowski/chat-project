@@ -3,7 +3,7 @@ package com.fdmgroup.ChatProject.bootapplication;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-public class BootApplication {
+
 	@Component
 	public class BootsStrapData implements CommandLineRunner {
 
@@ -14,5 +14,5 @@ public class BootApplication {
 		}
 		
 	}
-	}
+
 

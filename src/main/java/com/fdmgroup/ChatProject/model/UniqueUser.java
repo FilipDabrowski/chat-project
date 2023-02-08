@@ -57,7 +57,10 @@ public class UniqueUser {
 		return password;
 	}
 	public void setPassword(String password) {
-		this.password = password;
+		Integer hashedPassword = password.hashCode();
+		String hashedPasswordString = hashedPassword.toString();
+		
+		this.password = hashedPasswordString;
 	}
 	public String getName() {
 		return name;

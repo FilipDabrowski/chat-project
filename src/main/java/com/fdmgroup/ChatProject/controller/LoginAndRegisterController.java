@@ -9,13 +9,32 @@ public class LoginAndRegisterController {
 		
 	@GetMapping(value = "/")
 	public String goToIndex() {
-		return "index";
+		return "indexChat";
 	}
 	
-	@GetMapping(value="/auth/login")
+	@GetMapping(value = "/indexChat")
+	public String goToIndexChat() {
+		return "indexChat";
+	}
+	
+	@GetMapping(value="/login")
 	public String login() {
 		return "login";
 	}
+	
+	@GetMapping(value="/register")
+	public String goToRegister() {
+		return "/register";
+	}
+	
+	@PostMapping(value="/register")
+	public String actuallRegister() {
+		
+		//TODO registration
+		
+		return "/indexChat";
+	}
+	
 	
 	
 }

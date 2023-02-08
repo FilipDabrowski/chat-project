@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Chatty-Settings</title>
+<title>Chatty Admin-Settings</title>
 <style>
-<%@include file="/WEB-INF/css/profileSettingStyle.css" %>
+<%@include file="/WEB-INF/css/allSettingStyle.css"%>
 </style>
 </head>
 <body>
@@ -14,8 +14,9 @@
 <%@include file="/WEB-INF/jsps/header.jsp" %>
 
 <div style="display: flex; justify-content: center;">
-<h1>SETTINGS</h1>
+<h1>ADMIN SETTINGS</h1>
 </div>
+
 <div class="gridContainer">
 
 
@@ -54,9 +55,6 @@
 		</form>
 		
 		</div>
-		
-		
-
 
 		<div class="friendList">
 			<h3>Friend List</h3>
@@ -82,9 +80,24 @@
 			</c:forEach>
 		</div>
 
+		<div class="bannedUser">
+			<h3>Banned User</h3>
+			<form action="/banUser" method="post">
+				<input type="text" placeholder="nickName">
+				<input type="submit" value="Ban User">
+			</form>
+			<br>
+			<c:forEach items="${bannedUsers}" var="bannedUser">
+				<div class="displayBannedUser">
+					<form action="/unBan/${bannedUser.id}" method="post">
+						<label> ${bannedUser.nickName}</label>
+						<input type="button" value="unBan">
+					</form>	
+				</div>
+			</c:forEach>
+		</div>
+
 </div>
-
-
 
 
 

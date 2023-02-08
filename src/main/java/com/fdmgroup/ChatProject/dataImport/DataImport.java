@@ -6,13 +6,14 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 import com.fdmgroup.ChatProject.model.UniqueUser;
-import com.fdmgroup.ChatProject.service.interfaces.IUniqueUserService;
+import com.fdmgroup.ChatProject.security.UniqueUserDetails;
+import com.fdmgroup.ChatProject.service.UniqueUserDetailsService;
 
 @Component
 public class DataImport implements ApplicationRunner {
 
 	@Autowired
-	IUniqueUserService uniqueUserService;
+	UniqueUserDetailsService uniqueUserDetailsService;
 	
 	
 	
@@ -38,11 +39,17 @@ public class DataImport implements ApplicationRunner {
 		userOne.setPassword("admin");
 		userOne.setRole("ROLE_ADMIN");
 		
-		uniqueUserService.save(userOne);
-		uniqueUserService.save(userTwo);
-		uniqueUserService.save(userAdmin);
+		
+		UniqueUserDetails userOneDetail = new UniqueUserDetails(userOne);
+		UniqueUserDetails userTwoDetail = new UniqueUserDetails(userTwo);
+		UniqueUserDetails adminDetail = new UniqueUserDetails(userAdmin);
+		
+		uniqueUserDetailsService.saveUserToDb(userOneDetail);
+		uniqueUserDetailsService.saveUserToDb(userTwoDetail);
+		uniqueUserDetailsService.saveUserToDb(adminDetail);
 		
 		
+		System.out.println("End of Data Import");
 	}
 
 }

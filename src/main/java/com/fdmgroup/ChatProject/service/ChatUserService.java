@@ -1,13 +1,18 @@
 package com.fdmgroup.ChatProject.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fdmgroup.ChatProject.model.ChatUser;
+import com.fdmgroup.ChatProject.repository.ChatUserRepository;
 import com.fdmgroup.ChatProject.service.interfaces.IChatUserService;
 
 @Service
 public class ChatUserService implements IChatUserService{
 
+	@Autowired
+	private ChatUserRepository chatUserRepository; 
+	
 	@Override
 	public ChatUser findById(long userID) {
 		// TODO Auto-generated method stub
