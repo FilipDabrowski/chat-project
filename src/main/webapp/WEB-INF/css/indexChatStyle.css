@@ -1,0 +1,16 @@
+.body-grid{
+	display: grid;
+	grid-template-columns: c c c c;
+}
+
+.friendList{
+	grid-column: 1;
+}
+
+.chat{
+	grid-column: 2,3;
+}
+
+.groupChat{
+	grid-column: 4;
+}

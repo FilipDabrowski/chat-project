@@ -1,0 +1,22 @@
+
+.gridContainer{
+	display: grid;
+	grid-template-columns: c c c c c;
+}
+
+
+.editingProfile{
+	grid-column: 1,2;
+}
+
+.friendList{
+	grid-column: 3;
+}
+
+.blockedUser{
+	grid-column: 4;
+}
+
+.bannedUser{
+	grid-column: 5;
+}

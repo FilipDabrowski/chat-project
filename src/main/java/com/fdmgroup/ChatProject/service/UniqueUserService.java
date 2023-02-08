@@ -15,6 +15,11 @@ public class UniqueUserService implements IUniqueUserService {
 	
 	public void save(UniqueUser uniqueUser) {
 		uniqueUserRepository.save(uniqueUser);
+		
+	
+		
 	}
+
+	
 
 }

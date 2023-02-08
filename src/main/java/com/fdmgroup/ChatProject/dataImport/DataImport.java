@@ -3,44 +3,47 @@ package com.fdmgroup.ChatProject.dataImport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import com.fdmgroup.ChatProject.model.Role;
 import com.fdmgroup.ChatProject.model.UniqueUser;
-import com.fdmgroup.ChatProject.service.interfaces.IUniqueUserService;
+import com.fdmgroup.ChatProject.service.UniqueUserService;
+
 
 @Component
 public class DataImport implements ApplicationRunner {
 
 	@Autowired
-	IUniqueUserService uniqueUserService;
+	private UniqueUserService uniqueUserService;
 	
+	@Autowired
+	private PasswordEncoder encoder;
 	
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		
-		UniqueUser userOne = new UniqueUser();
-		userOne.setEmailAdress("userOne@blabla.bla");
-		userOne.setName("UserOne");
-		userOne.setPassword("1");
-		userOne.setRole("ROLE_SIMPLE_USER");
+		Role roleAdmin = new Role("Admin");
+		Role roleUser = new Role("User");
+		UniqueUser admin = new UniqueUser(encoder.encode("admin"),"admin","admin@admin.com",roleAdmin);
+		UniqueUser user = new UniqueUser(encoder.encode("user"),"user","user@user.com",roleUser);
 		
 		
-		UniqueUser userTwo = new UniqueUser();
-		userOne.setEmailAdress("userTwo@blabla.bla");
-		userOne.setName("UserTwo");
-		userOne.setPassword("2");
-		userOne.setRole("ROLE_SIMPLE_USER");
+//		UniqueUser userTwo = new UniqueUser();
+//		userOne.setEmailAdress("userTwo@blabla.bla");
+//		userOne.setName("UserTwo");
+//		userOne.setPassword("2");
+//
+//		
+//		UniqueUser userAdmin = new UniqueUser();
+//		userOne.setEmailAdress("userAdmin@blabla.bla");
+//		userOne.setName("UserAdmin");
+//		userOne.setPassword("admin");
+//	
 		
-		UniqueUser userAdmin = new UniqueUser();
-		userOne.setEmailAdress("userAdmin@blabla.bla");
-		userOne.setName("UserAdmin");
-		userOne.setPassword("admin");
-		userOne.setRole("ROLE_ADMIN");
+		uniqueUserService.save(admin);
+		uniqueUserService.save(user);
 		
-		uniqueUserService.save(userOne);
-		uniqueUserService.save(userTwo);
-		uniqueUserService.save(userAdmin);
 		
 		
 	}
