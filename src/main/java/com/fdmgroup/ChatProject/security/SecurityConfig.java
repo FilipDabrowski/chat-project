@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		//or for logged user or let us create custom forms to login. Who can see and do what. 
 		http
 			.authorizeRequests()
-			.antMatchers("/login", "/registration", "/error").permitAll()
+			.antMatchers("/login", "/register", "/error","/h2/**").permitAll()
 			//what we can see without login
 				//.antMatchers("/css/**", "/js/**", "/h2/**"/*h2 not suitable for production level app*/, "WEB-INF/jsps/**", "/", "/**/*.png", "/register").permitAll()
 				// any url with/admin/...something.. user can see if has role ADMIN

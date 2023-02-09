@@ -77,8 +77,8 @@ input[type="submit"] {
 							name="nickName" placeholder="nick name">
 					</div>
 										<div>
-						<label for="mailAddress">Email:</label> <input type="text"
-							name="mailAddress" placeholder="Email">
+						<label for="emailAdress">Email:</label> <input type="text"
+							name="emailAdress" placeholder="Email">
 					</div>
 					<div>
 						<label for="password">Password:</label> <input type="password"
@@ -89,8 +89,8 @@ input[type="submit"] {
 							name="confirmPassword" placeholder="Password">
 					</div>
 					<div>
-						<label for="realName">Name and Surname:</label> <input type="text"
-							name="realName" placeholder="Name and Surname">
+						<label for="Name">Name and Surname:</label> <input type="text"
+							name="Name" placeholder="Name and Surname">
 					</div>
 
 					<div>

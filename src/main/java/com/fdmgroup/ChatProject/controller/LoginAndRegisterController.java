@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fdmgroup.ChatProject.model.ChatUser;
 import com.fdmgroup.ChatProject.model.UniqueUser;
+import com.fdmgroup.ChatProject.repository.ChatUserRepository;
 import com.fdmgroup.ChatProject.security.DefaultUniqueUserDetailsService;
+import com.fdmgroup.ChatProject.service.ChatUserService;
 import com.fdmgroup.ChatProject.service.RoleService;
 import com.fdmgroup.ChatProject.service.UniqueUserService;
 
@@ -25,6 +28,8 @@ public class LoginAndRegisterController {
 		
 	@Autowired
 	DefaultUniqueUserDetailsService defaultUniqueUserDetailsService;
+	@Autowired
+	ChatUserService chatUserService;
 	
 	@Autowired
 	private PasswordEncoder encoder;
@@ -51,18 +56,23 @@ public class LoginAndRegisterController {
 	}
 	
 	@PostMapping("/register")
-	public String registerSubmit(@ModelAttribute("user")UniqueUser user, ModelMap model) {
-		UniqueUser userFromDatabase = defaultUniqueUserDetailsService.findByUniqueUserEmile(user.getName());
-		if (userFromDatabase.getEmailAdress().equals(user.getEmailAdress())) {
+	public String registerSubmit(@ModelAttribute("user")UniqueUser uniqueUser,
+						@ModelAttribute("chatuser")ChatUser chatUser, ModelMap model) {
+		UniqueUser userFromDatabase = defaultUniqueUserDetailsService.findByUniqueUserEmileAdress(uniqueUser.getName());
+		if (userFromDatabase.getEmailAdress().equals(uniqueUser.getEmailAdress())) {
 			model.addAttribute("message", "This user name already exists");
 			return "register";
 		}
 		
-		user.setRole(roleService.findByRoleName("Customer"));
-		user.setPassword(encoder.encode(user.getPassword()));
-		defaultUniqueUserDetailsService.saveUniqueUser(user);
+		uniqueUser.setRole(roleService.findByRoleName("Customer"));
+		uniqueUser.setPassword(encoder.encode(uniqueUser.getPassword()));
+		defaultUniqueUserDetailsService.saveUniqueUser(uniqueUser);
+		
+		chatUser.setUser(uniqueUser);
+		chatUser.setNickName(chatUser.getNickName());
+		chatUserService.save(chatUser);
 		//model.addAttribute("chatusers", defaultUniqueUserDetailsService.());
-		return "index";
+		return "redirect:/login";
 	}
 	
 	@ExceptionHandler(UsernameNotFoundException.class)
