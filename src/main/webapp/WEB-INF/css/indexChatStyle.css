@@ -1,16 +1,41 @@
 .body-grid{
 	display: grid;
-	grid-template-columns: c c c c;
+	grid-template-columns: 25% 50% 25%;
 }
 
 .friendList{
 	grid-column: 1;
+/*	border: 3px solid blue;
+	border-radius: 5px;*/
+	margin: 5px;
+	padding: 4px;
 }
 
 .chat{
-	grid-column: 2,3;
+	grid-column: 2;
+/*	border: 3px solid blue;
+	border-radius: 5px;*/
+	margin: 5px;
+	padding: 4px;
 }
 
 .groupChat{
-	grid-column: 4;
+	grid-column: 3;
+/*	border: 3px solid blue;
+	border-radius: 5px;*/
+	margin: 5px;
+	padding: 4px;
 }
+
+.outgoingMessage{
+	justify-content: flex-start;
+	border: 1px solid blue;
+	margin: 5px;
+}
+
+.incommingMessage{
+	justify-content: flex-end;
+	border: 1px solid green;
+	margin: 5px;
+}
+
