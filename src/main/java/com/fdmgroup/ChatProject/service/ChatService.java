@@ -1,5 +1,8 @@
 package com.fdmgroup.ChatProject.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,15 +23,18 @@ public class ChatService implements IChatService {
 	}
 
 	@Override
-	public Chat findById(long chatID) {
-		// TODO Auto-generated method stub
-		return null;
+	public Optional<Chat> findById(long chatID) {
+		return chatRepository.findById(chatID);	 
 	}
 
 	@Override
 	public void save(Chat chat) {
-		// TODO Auto-generated method stub
-		
+		chatRepository.save(chat);
+	}
+
+	@Override
+	public List<Chat> findAll() {
+		return chatRepository.findAll();
 	}
 	
 	

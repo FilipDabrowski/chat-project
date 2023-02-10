@@ -2,6 +2,7 @@ package com.fdmgroup.ChatProject.model;
 
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -24,6 +25,16 @@ public class Message {
 	
 	private LocalDateTime timestamp;
 	
+	private String timeString;
+	
+	public String getTimeString() {
+		return timeString;
+	}
+
+	public void setTimeString(String timeString) {
+		this.timeString = timeString;
+	}
+
 	@ManyToOne
 	private ChatUser sender;
 	
@@ -31,11 +42,14 @@ public class Message {
 	private Chat chat;
 
 	public Message() {
+		this.timestamp = LocalDateTime.now();
+		this.timeString = timestamp.format(DateTimeFormatter.ofPattern("yyyy.MM.dd  hh.mm"));
 	}
 
 	public Message(String message, ChatUser sender, Chat chat) {
 		this.message = message;
 		this.timestamp = LocalDateTime.now();
+		this.timeString = timestamp.format(DateTimeFormatter.ofPattern("yyyy.MM.dd  hh.mm"));
 		this.sender = sender;
 		this.chat = chat;	
 	}
@@ -43,6 +57,7 @@ public class Message {
 	public Message(String message, LocalDateTime timestamp, ChatUser sender, Chat chat) {
 		this.message = message;
 		this.timestamp = timestamp;
+		this.timeString = timestamp.format(DateTimeFormatter.ofPattern("yyyy.MM.dd  hh.mm"));
 		this.sender = sender;
 		this.chat = chat;
 	}

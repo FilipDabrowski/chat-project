@@ -24,6 +24,7 @@ public class ChatUser {
 	@Column(name="chatUser_id")
 	private Long id;
 	
+	@Column(unique = true)
 	private String nickName;
 	
 	@OneToOne
@@ -133,7 +134,12 @@ public class ChatUser {
 	public String toString() {
 		return "ChatUser [nickName=" + nickName + ", user=" + user + "]";
 	}
-	
+
+	public Long getId() {
+		return id;
+	}
+
+
 	
 }	
 

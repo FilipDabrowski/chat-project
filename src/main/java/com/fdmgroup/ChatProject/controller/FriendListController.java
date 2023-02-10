@@ -7,12 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class FriendListController {
 
-	@PostMapping("/addNewFriend")
-	public String addNewFried(ModelMap model) {
-		
-		model.addAttribute("friendMessage","new Friend");
-		return "indexChat";
-	}
+
 	
 	
 }

@@ -1,11 +1,14 @@
 package com.fdmgroup.ChatProject.service;
 
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.fdmgroup.ChatProject.model.Chat;
 import com.fdmgroup.ChatProject.model.ChatUser;
 import com.fdmgroup.ChatProject.model.UniqueUser;
 import com.fdmgroup.ChatProject.repository.ChatUserRepository;
@@ -19,9 +22,9 @@ public class ChatUserService implements IChatUserService{
 
 	
 	@Override
-	public ChatUser findById(long userID) {
+	public Optional<ChatUser> findById(long userID) {
 		// TODO Auto-generated method stub
-		return null;
+		return chatUserRepository.findById(userID);
 	}
 
 	@Override
@@ -38,6 +41,38 @@ public class ChatUserService implements IChatUserService{
 		return  Optional.empty();
 	}
 	return Optional.of(userList.get(0));
+	}
+
+	@Override
+	public Optional<ChatUser> findByNickName(String nickName) {
+		return chatUserRepository.findByNickName(nickName);
+		
+	}
+
+	@Override
+	public void addFrindToList(ChatUser chatUser, ChatUser friend) {
+		
+		Collection<ChatUser> friendList = chatUser.getFriendList();
+		
+		if(friendList.contains(friend)) {
+			return;
+		}
+		friendList.add(friend);
+		save(chatUser);
+		
+	}
+
+	@Override
+	public void addChatToUser(ChatUser currChatUser, Chat chat) {
+
+		Collection<Chat> chatList = currChatUser.getChats();
+		
+		if(chatList.contains(chat)) {
+			return;
+		}
+		chatList.add(chat);
+		
+		save(currChatUser);
 	}
 
 }

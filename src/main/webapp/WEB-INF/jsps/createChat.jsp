@@ -20,10 +20,11 @@
 		<div class="friendList">
 			<h3>Friend List</h3>
 			<form action="/createChat" method="post">
+			<input type="text" name="chatName" placeholder="groupName">
 				<c:forEach items="${currentUser.friendList}" var="friendUser">
 					<div class="displayFriend">
 						<label>${friendUser.nickName}</label>
-						<input type="checkbox" value="Add to Chat">
+						<input type="checkbox" name="params" value="${friendUser.nickName}">
 					</div>
 				</c:forEach>
 				<input type="submit" value="create Chat">
