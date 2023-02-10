@@ -23,6 +23,7 @@
 </div>
 	<div style="display: flex; justify-content: center;">
 		<c:choose>
+
 			<c:when test="${not empty currentUser}">
 				<h2>Hello ${currentUser.nickName}</h2>
 			</c:when>

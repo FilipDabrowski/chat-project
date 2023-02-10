@@ -6,14 +6,12 @@ import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthoritiesContainer;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fdmgroup.ChatProject.model.Role;
 import com.fdmgroup.ChatProject.model.UniqueUser;
-// wrapper class of UniqueUser
-public class UniqueUserPrincipal implements UserDetails {// UserDetails allow us to get informations about user and his account for ex. is he blocked
 
+public class UniqueUserPrincipal implements UserDetails {// wrapper class of UniqueUser
 
 	
 	private UniqueUser uniqueUser;//we dont need Entity annotation because this object is used to authentication purpose only
@@ -29,7 +27,6 @@ public class UniqueUserPrincipal implements UserDetails {// UserDetails allow us
 	public Collection<? extends GrantedAuthority> getAuthorities() {//return a Collection, so it allows here to user has many rules
 		Role role = uniqueUser.getRole();
 		List<Role> roleList = new ArrayList<>();
-		
 		roleList.add(role);
 		return roleList;
 	}

@@ -29,6 +29,7 @@
 				</div>
 		<c:choose>
 			<c:when test="${not empty currentUser}">
+
 				<div>
 					<form action="/settings" method="post">
 						<input class="header-button" type="submit" value="settings">

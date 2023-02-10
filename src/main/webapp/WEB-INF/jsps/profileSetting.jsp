@@ -59,7 +59,7 @@
 
 
 		<div class="friendList">
-			<h3>Friend List</h3> 
+			<h3>Friend List</h3>
 			<c:forEach items="${currentUser.friendList}" var="friendUser">
 				<div class="displayFriend">
 					<form action="/deletFriend/${friendUser.id}" method="post">

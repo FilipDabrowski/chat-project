@@ -35,9 +35,9 @@ public class UniqueUser {
 		this.emailAdress = emailAdress;
 		this.role = role;
 	}
-	public UniqueUser(String emailAdress) {
+	public UniqueUser(String name) {
 		super();
-		this.emailAdress = emailAdress;
+		this.name = name;
 	
 		
 	}
@@ -88,7 +88,10 @@ public class UniqueUser {
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		Integer hashedPassword = password.hashCode();
+		String hashedPasswordString = hashedPassword.toString();
+		
+		this.password = hashedPasswordString;
 	}
 
 	public String getName() {

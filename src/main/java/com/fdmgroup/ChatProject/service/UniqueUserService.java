@@ -22,9 +22,12 @@ public class UniqueUserService implements IUniqueUserService {
 		
 	}
 
-	public Optional <UniqueUser> findById(Long id) {
+	@Override
+	public Optional<UniqueUser> findByName(String name) {
+
+		return uniqueUserRepository.findByName(name);
 		
-		return uniqueUserRepository.findById(id);
+		
 	}
 
 	
