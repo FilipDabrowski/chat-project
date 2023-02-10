@@ -3,10 +3,12 @@ package com.fdmgroup.ChatProject.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +21,8 @@ import com.fdmgroup.ChatProject.security.DefaultUniqueUserDetailsService;
 import com.fdmgroup.ChatProject.security.UniqueUserPrincipal;
 import com.fdmgroup.ChatProject.service.ChatUserService;
 import com.fdmgroup.ChatProject.service.UniqueUserService;
+import com.fdmgroup.ChatProject.service.interfaces.IBannedUserService;
+import com.fdmgroup.ChatProject.service.interfaces.IRoleService;
 
 
 
@@ -33,7 +37,13 @@ public class UserController {
 	private DefaultUniqueUserDetailsService defaultUniqueUserDetailsService;
 	
 	@Autowired
+	private IRoleService roleService;
+	
+	@Autowired
+	private IBannedUserService bannedUserService;
+	@Autowired
 	private PasswordEncoder passwordEncoder;
+
 	
 //	@GetMapping("/change-password")
 //	public String changePasswordPage(@ModelAttribute("uniqueUser") UniqueUser uniqueUser) {
@@ -80,7 +90,24 @@ public class UserController {
 }
 	
 		@GetMapping("/settings")
-		public String goToProfileSettings() {
+		public String goToProfileSettings(ModelMap model,Authentication authentication) {
+			
+			
+			String name = authentication.getName();
+			Optional<UniqueUser> uniqueUserOpt = uniqueUserService.findByName(name);
+			
+			if(uniqueUserOpt.isPresent()) {
+			Optional<ChatUser> chatUserOpt = chatUserService.findByUser(uniqueUserOpt.get());		
+			chatUserOpt.ifPresent((chatUser)-> model.addAttribute("currentUser",chatUser));
+			
+			if(chatUserOpt.get().getUser().getRole().equals(roleService.findByRoleName("Admin"))) {
+				model.addAttribute("bannedUsers",bannedUserService.findAll());
+				return "/admin/allSetting";
+			}
+			
+			}
+			
+			
 		return "profileSetting";
 		
 }

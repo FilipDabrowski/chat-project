@@ -21,4 +21,10 @@ public interface IChatUserService {
 
 	void addChatToUser(ChatUser currChatUser, Chat chat);
 
+	void addUserToBannedList(ChatUser user, ChatUser currUser);
+
+	void unblockUser(ChatUser userToUnblock, ChatUser currUser);
+
+	void removeFriend(ChatUser userToUnblock, ChatUser currUser);
+
 }

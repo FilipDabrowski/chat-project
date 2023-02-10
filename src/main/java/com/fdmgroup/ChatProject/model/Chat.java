@@ -92,7 +92,7 @@ public class Chat {
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(chattingUsers, starttimeOfChat);
+		return Objects.hash(chattingUsers);
 	}
 
 	@Override
@@ -104,8 +104,7 @@ public class Chat {
 		if (getClass() != obj.getClass())
 			return false;
 		Chat other = (Chat) obj;
-		return Objects.equals(chattingUsers, other.chattingUsers)
-				&& Objects.equals(starttimeOfChat, other.starttimeOfChat);
+		return Objects.equals(chattingUsers, other.chattingUsers);
 	}
 
 	@Override

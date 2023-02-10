@@ -28,7 +28,7 @@
 						<input type="text" value="${currentUser.nickName}">
 		</div><div>
 						<label> Real Name: </label>
-						<input type="text" value="${currentUser.user.nickName}">
+						<input type="text" value="${currentUser.user.name}">
 		</div><div>
 						<label> Email Address: </label>
 						<input type="text" value="${currentUser.user.emailAdress}">
@@ -76,7 +76,7 @@
 				<div class="displayFriend">
 					<form action="/deletFriend/${friendUser.id}" method="post">
 						<label> ${friendUser.nickName}</label>
-						<input type="button" value="delete">
+						<input type="submit" value="delete">
 					</form>	
 				</div>
 			</c:forEach>
@@ -84,11 +84,15 @@
 		
 		<div class="blockedUser">
 			<h3>Blocked User</h3>
+			<form action="/blockUser" method="post">
+				<input type="text" placeholder="nickName">
+				<input type="submit" value="Block User">
+			</form>
 			<c:forEach items="${currentUser.blockedUsers}" var="blockedUser">
 				<div class="displayBlockedUser">
 					<form action="/unBlock/${blockedUser.id}" method="post">
 						<label> ${blockedUser.nickName}</label>
-						<input type="button" value="unBlock">
+						<input type="submit" value="unBlock">
 					</form>	
 				</div>
 			</c:forEach>

@@ -30,7 +30,10 @@ public class ChatService implements IChatService {
 
 	@Override
 	public void save(Chat chat) {
+		List<Chat> allChats = findAll();
+		if(!allChats.contains(chat)) {
 		chatRepository.save(chat);
+		}
 	}
 
 	@Override
