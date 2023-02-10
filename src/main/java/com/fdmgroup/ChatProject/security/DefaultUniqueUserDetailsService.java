@@ -46,9 +46,9 @@ public class DefaultUniqueUserDetailsService implements UserDetailsService {
 	uniqueUserRepository.save(uniqueUser);
 	}
 	
-	public UniqueUser findByUniqueUserEmileAdress(String emileAdress) {
+	public UniqueUser findByUniqueUserEmile(String emileAdress) {
 		Optional<UniqueUser>optionalUniqueUser = uniqueUserRepository.findByEmailAdress(emileAdress);
-		UniqueUser uniqueUser = optionalUniqueUser.orElse(new UniqueUser("default emile")); // if user hasn't been found, then it returns new user with default name
+		UniqueUser uniqueUser = optionalUniqueUser.orElse(new UniqueUser("default name")); // if user hasn't been found, then it returns new user with default name
 		return uniqueUser;
 		
 	}

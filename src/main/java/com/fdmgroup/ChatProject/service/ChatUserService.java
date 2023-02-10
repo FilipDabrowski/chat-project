@@ -30,7 +30,7 @@ public class ChatUserService implements IChatUserService{
 	}
 
 	@Override
-	public Optional<ChatUser> findByUser(UniqueUser name) {
+	public Optional<ChatUser>  findByUser(UniqueUser name) {
 		
 	List<ChatUser> userList = chatUserRepository.findByUser(name);
 	

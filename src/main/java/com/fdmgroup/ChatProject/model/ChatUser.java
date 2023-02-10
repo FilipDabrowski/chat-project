@@ -32,6 +32,7 @@ public class ChatUser {
 	//what is the best approach
 	//should this be bi-directional?  and then how?
 	@ManyToMany
+	
 	@JoinTable(name = "CHATUSER_FRIENDS_JOIN_TABLE",
 			joinColumns = @JoinColumn(name = "CHATUSER_ID", referencedColumnName = "chatUser_id"),
 			inverseJoinColumns = @JoinColumn(name = "FRIEND_ID", referencedColumnName = "chatUser_id"))

@@ -3,7 +3,7 @@ package com.fdmgroup.ChatProject.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -16,80 +16,74 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fdmgroup.ChatProject.model.ChatUser;
 import com.fdmgroup.ChatProject.model.UniqueUser;
-import com.fdmgroup.ChatProject.repository.ChatUserRepository;
 import com.fdmgroup.ChatProject.security.DefaultUniqueUserDetailsService;
-import com.fdmgroup.ChatProject.service.ChatUserService;
 import com.fdmgroup.ChatProject.service.RoleService;
 import com.fdmgroup.ChatProject.service.UniqueUserService;
-
-
+import com.fdmgroup.ChatProject.service.interfaces.IChatUserService;
+import com.fdmgroup.ChatProject.service.interfaces.IUniqueUserService;
 
 @Controller
 public class LoginAndRegisterController {
-		
+
 	@Autowired
 	DefaultUniqueUserDetailsService defaultUniqueUserDetailsService;
+
 	@Autowired
-	ChatUserService chatUserService;
-	
+	IChatUserService chatUserService;
+
+	@Autowired
+	IUniqueUserService uniqueUserService;
+
 	@Autowired
 	private PasswordEncoder encoder;
-	@Autowired
-	RoleService	roleService;
 	
+	@Autowired
+	RoleService roleService;
+
+//	@GetMapping(value = "/")
+//	public String goToIndex() {
+//		return "indexChat";
+//	}
+
 	@GetMapping(value = "/indexChat")
 	public String goToIndexChat(ModelMap model, Authentication authentication) {
 			
-		String name = authentication.getUsername();
+		String name = authentication.getName();
 		System.out.println(name);
-		Optional<UniqueUser> uniqueUserOpt = Optional.of(defaultUniqueUserDetailsService.findByUniqueUserName(name));
+		Optional<UniqueUser> uniqueUserOpt = uniqueUserService.findByName(name);
 		if(uniqueUserOpt.isPresent()) {
 		Optional<ChatUser> chatUserOpt = chatUserService.findByUser(uniqueUserOpt.get());		
-		
 		chatUserOpt.ifPresent((chatUser)-> model.addAttribute("currentUser",chatUser));
 		}
 	
 		return "indexChat";
 	}
-	
-	
-	
+
 	@GetMapping("/login")
 	public String login() {
 		return "login";
 	}
-	
+
 	@GetMapping("/register")
 	public String register() {
 		return "register";
 	}
-	
-	
-	@GetMapping(value = "/editingProfil/{id}")
-	public String goToProfileSetting() {
-		return "profileSetting";
-	}
-	
+
 	@PostMapping("/register")
-	public String registerSubmit(@ModelAttribute("user")UniqueUser uniqueUser,
-						@ModelAttribute("chatuser")ChatUser chatUser, ModelMap model) {
-		UniqueUser userFromDatabase = defaultUniqueUserDetailsService.findByUniqueUserEmileAdress(uniqueUser.getName());
-		if (userFromDatabase.getEmailAdress().equals(uniqueUser.getEmailAdress())) {
+	public String registerSubmit(@ModelAttribute("user") UniqueUser user, ModelMap model) {
+		UniqueUser userFromDatabase = defaultUniqueUserDetailsService.findByUniqueUserEmile(user.getName());
+		if (userFromDatabase.getEmailAdress().equals(user.getEmailAdress())) {
 			model.addAttribute("message", "This user name already exists");
 			return "register";
 		}
-		
-		uniqueUser.setRole(roleService.findByRoleName("Customer"));
-		uniqueUser.setPassword(encoder.encode(uniqueUser.getPassword()));
-		defaultUniqueUserDetailsService.saveUniqueUser(uniqueUser);
-		
-		chatUser.setUser(uniqueUser);
-		chatUser.setNickName(chatUser.getNickName());
-		chatUserService.save(chatUser);
-		//model.addAttribute("chatusers", defaultUniqueUserDetailsService.());
-		return "redirect:/login";
+
+		user.setRole(roleService.findByRoleName("Customer"));
+		user.setPassword(encoder.encode(user.getPassword()));
+		defaultUniqueUserDetailsService.saveUniqueUser(user);
+		// model.addAttribute("chatusers", defaultUniqueUserDetailsService.());
+		return "index";
 	}
-	
+
 	@ExceptionHandler(UsernameNotFoundException.class)
 	public ModelAndView handleUsernameNotFoundException(UsernameNotFoundException ex) {
 		ModelAndView mav = new ModelAndView();
@@ -98,6 +92,5 @@ public class LoginAndRegisterController {
 		mav.addObject("message", ex.getMessage());
 		return mav;
 	}
-	
-	
+
 }
