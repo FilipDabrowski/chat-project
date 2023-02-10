@@ -31,7 +31,7 @@
 			<c:when test="${not empty currentUser}">
 
 				<div>
-					<form action="/settings" method="post">
+					<form action="/settings" method="get">
 						<input class="header-button" type="submit" value="settings">
 					</form>
 				</div>

@@ -48,32 +48,33 @@ public class UserController {
 	                                 @RequestParam("confirmNewPassword") String confirmNewPassword,
 	                                 Model model) {
 
-	        Optional<UniqueUser> currentUser = uniqueUserService.findById(id);
-	        UniqueUser currentUser1;
-	        if(currentUser.isPresent()) {
-	        	currentUser1 = currentUser.get();
-	        
-	        
+		Optional<UniqueUser> currentUserOptional = uniqueUserService.findById(id);
+		if (!currentUserOptional.isPresent()) {
+		    // handle the case where the user was not found
+		    model.addAttribute("error", "User not found");
+		    return "profileSetting";
+		}
+		UniqueUser currentUser = currentUserOptional.get();
+//
+//	        if (!passwordEncoder.matches(oldPassword, currentUser.getPassword())) {
+//	            model.addAttribute("error", "Incorrect old password");
+//	            return "profileSetting";
+//	        }
+//
+//	        if (!newPassword.equals(confirmNewPassword.endsWith(confirmNewPassword))) {
+//	            model.addAttribute("error", "New passwords do not match");
+//	            return "profileSetting";
+//	        }
 
-	        if (!passwordEncoder.matches(oldPassword, currentUser1.getPassword())) {
-	            model.addAttribute("error", "Incorrect old password");
-	            return "changePassword";
-	        }
-
-	        if (!newPassword.equals(confirmNewPassword)) {
-	            model.addAttribute("error", "New passwords do not match");
-	            return "changePassword";
-	        }
-
-	        currentUser1.setPassword(passwordEncoder.encode(newPassword));
-	        uniqueUserService.save(currentUser1);
+	        currentUser.setPassword(passwordEncoder.encode(newPassword));
+	        uniqueUserService.save(currentUser);
 	        model.addAttribute("success", "Password changed successfully");
-	        return "changePassword";
-	    }
-			return "redirect:/indexChat";
-	  
-			
-//		@PostGet("/editingProfil/{id}")
-//		public String goToProfileSettings()
+	        return "profileSetting";
+	    
+}
+	
+		@GetMapping("/settings")
+		public String goToProfileSettings() {
+		return "profileSetting";
 }
 }

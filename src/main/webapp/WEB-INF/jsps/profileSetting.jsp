@@ -40,13 +40,13 @@
 		<form action="/changePassword/${currentUser.id}" method="post">
 		<div>		
 						<label> Old Password: </label>
-						<input type="password" placeholder="password">
+						<input type="password" name="oldPassword"  placeholder="password">
 		</div><div>
 						<label> New Password: </label>
-						<input type="password" placeholder="new password">
+						<input type="password" name="newPassword" placeholder="new password">
 		</div><div>
 						<label> Confirm New Password: </label>
-						<input type="password" placeholder="new password">
+						<input type="password" name="confirmNewPassword" placeholder="new password">
 		</div><div>
 				<input type="submit" value="change Password">
 		</div>
