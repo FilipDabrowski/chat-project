@@ -28,7 +28,7 @@
 						<input type="text" value="${currentUser.nickName}">
 		</div><div>
 						<label> Real Name: </label>
-						<input type="text" value="${currentUser.user.nickName}">
+						<input type="text" value="${currentUser.user.name}">
 		</div><div>
 						<label> Email Address: </label>
 						<input type="text" value="${currentUser.user.emailAdress}">

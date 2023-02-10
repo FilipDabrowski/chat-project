@@ -3,10 +3,12 @@ package com.fdmgroup.ChatProject.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,9 +57,12 @@ public class UserController {
 	                                 @RequestParam("confirmNewPassword") String confirmNewPassword,
 	                                 Model model) {
 		
-		Optional<UniqueUser> currentUserOptional = uniqueUserService.findById(id);
+		
+		
+		Optional<ChatUser> currentChatUserOptional = Optional.of(chatUserService.findById(id));
+		
 		boolean isPasswordSame = passwordEncoder.matches
-								(oldPassword, currentUserOptional
+								(oldPassword, currentChatUserOptional
 								.get().getPassword());
 		
 		//String hashedOldPassword = passwordEncoder.encode(oldPassword);
@@ -80,7 +85,19 @@ public class UserController {
 }
 	
 		@GetMapping("/settings")
-		public String goToProfileSettings() {
+		public String goToProfileSettings(ModelMap model, Authentication authentication) {
+			
+			String name = authentication.getName();
+			System.out.println(name);
+			Optional<UniqueUser> uniqueUserOpt = uniqueUserService.findByName(name);
+			if(uniqueUserOpt.isPresent()) {
+			Optional<ChatUser> chatUserOpt = chatUserService.findByUser(uniqueUserOpt.get());
+			UniqueUser 
+			chatUserOpt.ifPresent((chatUser)-> model.addAttribute("currentUser",chatUser));
+			
+			}
+		
+		
 		return "profileSetting";
 		
 }
