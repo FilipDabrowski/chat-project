@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,6 +31,10 @@ public class Chat {
 	@ManyToMany(mappedBy = "chats")
 	private Collection<ChatUser> chattingUsers;
 
+	public Long getId() {
+		return id;
+	}
+
 	private LocalDateTime starttimeOfChat;
 
 	public Chat() {
@@ -36,7 +42,16 @@ public class Chat {
 		chattingUsers = new ArrayList<>();
 	}
 
-	public Chat(ChatUser user1, ChatUser user2, ChatUser... chatUsers) {
+	public Chat(String chatName, ChatUser user1, ChatUser user2) {
+		this.chatName = chatName;
+		starttimeOfChat = LocalDateTime.now();
+		chattingUsers = new ArrayList<>();
+		chattingUsers.add(user1);
+		chattingUsers.add(user2);
+	}
+	
+	public Chat(String chatName, ChatUser user1, ChatUser user2, ChatUser... chatUsers) {
+		this.chatName = chatName;
 		starttimeOfChat = LocalDateTime.now();
 		chattingUsers = new ArrayList<>();
 		chattingUsers.add(user1);

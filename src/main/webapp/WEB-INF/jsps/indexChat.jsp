@@ -39,33 +39,35 @@
 			<h3>Friend List</h3>
 			<c:if test="${not empty friendMessage}">Friend request to ${friendMessage} was send</c:if>
 			<form action="/addNewFriend" method="post">
-				<input type="text" placeholder="nickName">
+				<input type="text" name="nickName" placeholder="nickName">
+				<input type="hidden" name="currentChatID" value="${selectedChat.id}">
 				<input type="submit" value="add new Friend">
 			</form>
 			<c:forEach items="${currentUser.friendList}" var="friendUser">
 				<div class="displayFriend">
-					<form action="/goToChatWIth/${friendUser.id}" method="post">
-						<input type="button" value="${friendUser.nickName}">
+					<form action="/goToChatWith/${friendUser.id}" method="post">
+						<input type="hidden" name="currentUserID" value="${currentUser.id}">
+						<input type="submit" value="${friendUser.nickName}">
 					</form>	
 				</div>
 			</c:forEach>
 		</div>
 
 		<div class="chat">
-			<h3> chat with ${selectedChat.name}</h3>
+			<h3> chat with ${selectedChat.chatName}</h3>
 			<div class="chatWindow">
 				<div class=chatMessage>
 					<c:forEach var="message" items="${chatMessages}">
 						<c:choose>
 							<c:when test="${message.sender.nickName eq currentUser.nickName}">
 								<div class = outgoingMessage>
-									<div>${message.timestamp}</div>
+									<div>${message.timeString}   ${message.sender.nickName}</div>
 									<div>${message.message}</div>
 								</div>
 							</c:when>
 							<c:otherwise>
 								<div class = incommingMessage>
-									<div>${message.timestamp}</div>
+									<div>${message.timeString}    ${message.sender.nickName}</div>
 									<div>${message.message}</div>
 								</div>
 							</c:otherwise>
@@ -74,22 +76,26 @@
 				</div>	
 				<div class = "sendingMessage">
 					<form method="post" action="/sendMessage">
-					<input class="text-input" type="text" name="message" /> <input
-							class="send-button" type="submit" value="send" />
+					<input class="text-input" type="text" name="message" />
+					
+					<input type="hidden" name="currentChatID" value="${selectedChat.id}">
+				
+					<input class="send-button" type="submit" value="send" />
 					</form>				
 				</div>
 			</div>
 		</div>
 
 		<div class="groupChat">
-			<h3>My GroupChats</h3>
+			<h3>My Chats</h3>
 				<form action="/createNewGroupChat" method="post">
-				<input type="submit" value="create new GroupChat">
+				<input type="submit" value="create GroupChat">
 			</form>
 			<c:forEach items="${currentUser.chats}" var="groupChat">
 				<div class="displayGroupChat">
 					<form action="/goToGroupChat/${groupChat.id}" method="post">
-						<input type="button" value="${groupChat.name}">
+						<input type="hidden" name="currentUserID" value="${currentUser.id}">
+						<input type="submit" value="${groupChat.chatName}">
 					</form>	
 				</div>
 			</c:forEach>
