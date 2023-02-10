@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth
-			.userDetailsService(userDetailsService)// we tell spring here don't use your user detail service, but our
+			.userDetailsService(userDetailsService)// we tell spring here don't use your user detail service, but our, that deploy informations about users 
 			.passwordEncoder(encoder());
 	}
 
@@ -42,12 +42,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		//or for logged user or let us create custom forms to login. Who can see and do what. 
 		http
 			.authorizeRequests()
-			.antMatchers("/login", "/registration", "/error").permitAll()
+			.antMatchers("/login", "/register", "/error").permitAll()
 			//what we can see without login
-				//.antMatchers("/css/**", "/js/**", "/h2/**"/*h2 not suitable for production level app*/, "WEB-INF/jsps/**", "/", "/**/*.png", "/register").permitAll()
+				.antMatchers("/css/**", "/js/**", "/h2/**").permitAll()//*h2 not suitable for production level app*/, "WEB-INF/jsps/**", "/", "/**/*.png", "/register").permitAll()
 				// any url with/admin/...something.. user can see if has role ADMIN
 				.antMatchers("/admin/**").hasRole("ADMIN")
-				.antMatchers("/addUser").hasRole("ADMIN")
+				//.antMatchers("/addUser").hasRole("ADMIN")
 				// user has to be authenticated for any different request, so user need to be logged correctly. User doesnt has any particular role,
 				//User need only be logged to view anything out. 
 				.anyRequest().authenticated()

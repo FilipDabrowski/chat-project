@@ -17,7 +17,7 @@ import com.fdmgroup.ChatProject.repository.UniqueUserRepository;
 
 
 
-
+//this class is a layer mediates between repository and spring configuration
 @Service
 public class DefaultUniqueUserDetailsService implements UserDetailsService {
 
@@ -31,7 +31,8 @@ public class DefaultUniqueUserDetailsService implements UserDetailsService {
 	}
 	
 	@Override
-	public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {// it takes user name and then get his detailed informations
+		//todo throw if not exsist
 		UniqueUser uniqueUser = findByUniqueUserName(name);
 		return new UniqueUserPrincipal(uniqueUser);
 	}
@@ -48,7 +49,7 @@ public class DefaultUniqueUserDetailsService implements UserDetailsService {
 	
 	public UniqueUser findByUniqueUserEmile(String emileAdress) {
 		Optional<UniqueUser>optionalUniqueUser = uniqueUserRepository.findByEmailAdress(emileAdress);
-		UniqueUser uniqueUser = optionalUniqueUser.orElse(new UniqueUser("default name")); // if user hasn't been found, then it returns new user with default name
+		UniqueUser uniqueUser = optionalUniqueUser.orElse(new UniqueUser("default email")); // if user hasn't been found, then it returns new user with default name
 		return uniqueUser;
 		
 	}

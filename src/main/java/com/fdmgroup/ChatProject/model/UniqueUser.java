@@ -35,9 +35,9 @@ public class UniqueUser {
 		this.emailAdress = emailAdress;
 		this.role = role;
 	}
-	public UniqueUser(String name) {
+	public UniqueUser(String emailAdress) {
 		super();
-		this.name = name;
+		this.emailAdress = emailAdress;
 	
 		
 	}
