@@ -15,6 +15,8 @@ public interface ChatUserRepository extends JpaRepository<ChatUser, Long> {
 
 	List<ChatUser> findByUser(UniqueUser name);
 
+
 	Optional<ChatUser> findByNickName(String nickName);
+
 
 }

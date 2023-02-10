@@ -30,6 +30,13 @@ public class UniqueUserService implements IUniqueUserService {
 		
 	}
 
+
+	public Optional<UniqueUser> findById(Long id) {
+		
+		return uniqueUserRepository.findById(id);
+	}
+
+
 	
 
 }

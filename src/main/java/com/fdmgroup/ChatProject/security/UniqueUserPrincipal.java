@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.fdmgroup.ChatProject.model.Role;
 import com.fdmgroup.ChatProject.model.UniqueUser;
 
+
 public class UniqueUserPrincipal implements UserDetails {// wrapper class of UniqueUser
 
 	
@@ -22,6 +23,11 @@ public class UniqueUserPrincipal implements UserDetails {// wrapper class of Uni
 	
 	this.uniqueUser = uniqueUser;
 }
+	
+	// need for receiving data of authenticated user
+		public UniqueUser getUniqueUser() {
+			return this.uniqueUser;
+		}
 // if any of overwritten method returns false, the particular user is not going to be able to log in.
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {//return a Collection, so it allows here to user has many rules
@@ -31,6 +37,11 @@ public class UniqueUserPrincipal implements UserDetails {// wrapper class of Uni
 		return roleList;
 	}
 
+	public void setPassword(String password) {
+        this.uniqueUser.setPassword(password);
+    }
+	
+	
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub

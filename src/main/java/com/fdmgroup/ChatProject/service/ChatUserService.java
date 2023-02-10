@@ -1,6 +1,7 @@
 package com.fdmgroup.ChatProject.service;
 
 
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -8,7 +9,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+
 import com.fdmgroup.ChatProject.model.Chat;
+
 import com.fdmgroup.ChatProject.model.ChatUser;
 import com.fdmgroup.ChatProject.model.UniqueUser;
 import com.fdmgroup.ChatProject.repository.ChatUserRepository;
@@ -25,22 +29,6 @@ public class ChatUserService implements IChatUserService{
 	public Optional<ChatUser> findById(long userID) {
 		// TODO Auto-generated method stub
 		return chatUserRepository.findById(userID);
-	}
-
-	@Override
-	public void save(ChatUser chatUser) {
-		chatUserRepository.save(chatUser);
-	}
-
-	@Override
-	public Optional<ChatUser>  findByUser(UniqueUser name) {
-		
-	List<ChatUser> userList = chatUserRepository.findByUser(name);
-	
-	if(userList.isEmpty()) {
-		return  Optional.empty();
-	}
-	return Optional.of(userList.get(0));
 	}
 
 	@Override
@@ -73,6 +61,22 @@ public class ChatUserService implements IChatUserService{
 		chatList.add(chat);
 		
 		save(currChatUser);
+	}
+
+	@Override
+	public void save(ChatUser chatUser) {
+		chatUserRepository.save(chatUser);
+	}
+
+	@Override
+	public Optional<ChatUser>  findByUser(UniqueUser name) {
+		
+	List<ChatUser> userList = chatUserRepository.findByUser(name);
+	
+	if(userList.isEmpty()) {
+		return  Optional.empty();
+	}
+	return Optional.of(userList.get(0));
 	}
 
 }
