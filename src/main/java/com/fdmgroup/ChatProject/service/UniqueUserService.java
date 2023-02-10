@@ -1,5 +1,7 @@
 package com.fdmgroup.ChatProject.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,11 @@ public class UniqueUserService implements IUniqueUserService {
 		
 	
 		
+	}
+
+	public Optional <UniqueUser> findById(Long id) {
+		
+		return uniqueUserRepository.findById(id);
 	}
 
 	
