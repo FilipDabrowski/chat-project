@@ -143,9 +143,7 @@ public class ChatUser {
 		return "ChatUser [nickName=" + nickName + ", user=" + user + "]";
 	}
 
-	public Long getId() {
-		return id;
-	}
+	
 
 
 	

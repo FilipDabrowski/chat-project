@@ -18,7 +18,7 @@ import com.fdmgroup.ChatProject.model.ChatUser;
 import com.fdmgroup.ChatProject.model.UniqueUser;
 import com.fdmgroup.ChatProject.security.DefaultUniqueUserDetailsService;
 import com.fdmgroup.ChatProject.service.RoleService;
-
+import com.fdmgroup.ChatProject.service.UniqueUserService;
 import com.fdmgroup.ChatProject.service.interfaces.IChatUserService;
 import com.fdmgroup.ChatProject.service.interfaces.IUniqueUserService;
 
@@ -40,31 +40,25 @@ public class LoginAndRegisterController {
 	@Autowired
 	RoleService roleService;
 
+//	@GetMapping(value = "/")
+//	public String goToIndex() {
+//		return "indexChat";
+//	}
 
-	@GetMapping(value = "/")
-	public String goToIndex(ModelMap model,Authentication authentication) {
+	@GetMapping(value = "/indexChat")
+	public String goToIndexChat(ModelMap model, Authentication authentication) {
+			
 		String name = authentication.getName();
+		System.out.println(name);
 		Optional<UniqueUser> uniqueUserOpt = uniqueUserService.findByName(name);
-		
 		if(uniqueUserOpt.isPresent()) {
 		Optional<ChatUser> chatUserOpt = chatUserService.findByUser(uniqueUserOpt.get());		
 		chatUserOpt.ifPresent((chatUser)-> model.addAttribute("currentUser",chatUser));
+		
 		}
+	
 		return "indexChat";
 	}
-	
-	@GetMapping(value = "/indexChat")
-	public String goToIndexChat(ModelMap model, Authentication authentication) {	
-		
-			String name = authentication.getName();
-			Optional<UniqueUser> uniqueUserOpt = uniqueUserService.findByName(name);
-			
-			if(uniqueUserOpt.isPresent()) {
-			Optional<ChatUser> chatUserOpt = chatUserService.findByUser(uniqueUserOpt.get());		
-			chatUserOpt.ifPresent((chatUser)-> model.addAttribute("currentUser",chatUser));
-			}
-			return "indexChat";
-	}	
 
 	@GetMapping("/login")
 	public String login() {
