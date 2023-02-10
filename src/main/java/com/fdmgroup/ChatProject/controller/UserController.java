@@ -16,13 +16,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fdmgroup.ChatProject.model.ChatUser;
 import com.fdmgroup.ChatProject.model.UniqueUser;
 import com.fdmgroup.ChatProject.security.DefaultUniqueUserDetailsService;
+import com.fdmgroup.ChatProject.security.UniqueUserPrincipal;
 import com.fdmgroup.ChatProject.service.ChatUserService;
 import com.fdmgroup.ChatProject.service.UniqueUserService;
 
 
+
 @Controller
 public class UserController {
-	
+
 	@Autowired
 	private UniqueUserService uniqueUserService;
 	@Autowired
@@ -41,40 +43,45 @@ public class UserController {
 	
 		
 	 //@PostMapping("/changePassword/{id}")
+//	@GetMapping("/changePassword")
+//		public String changePasswordPage(@ModelAttribute("uniqueeUser") UniqueUser uniqueUser) {
+//		return "/changePassword/{id}";
+//	}
+	
 	@PostMapping("/changePassword/{id}")
 	    public String changePassword(@PathVariable Long id,
 	                                 @RequestParam("oldPassword") String oldPassword,
 	                                 @RequestParam("newPassword") String newPassword,
 	                                 @RequestParam("confirmNewPassword") String confirmNewPassword,
 	                                 Model model) {
-
+		
 		Optional<UniqueUser> currentUserOptional = uniqueUserService.findById(id);
-		if (!currentUserOptional.isPresent()) {
-		    // handle the case where the user was not found
-		    model.addAttribute("error", "User not found");
-		    return "profileSetting";
+		boolean isPasswordSame = passwordEncoder.matches
+								(oldPassword, currentUserOptional
+								.get().getPassword());
+		
+		//String hashedOldPassword = passwordEncoder.encode(oldPassword);
+		String hashedNewPassword = passwordEncoder.encode(newPassword);
+		
+		UserDetails userDetails = defaultUniqueUserDetailsService.loadUserByIdForPasswordChange(id);
+		UniqueUserPrincipal uniqueUserPrincipal = (UniqueUserPrincipal) userDetails;
+		
+		if(isPasswordSame) {
+			uniqueUserPrincipal.setPassword(hashedNewPassword);
+		    userDetails = (UserDetails) uniqueUserPrincipal;
+		    defaultUniqueUserDetailsService.saveUserToDb(uniqueUserPrincipal);
+		    return "redirect:/login";
+		    
+		}else {
+			System.out.println("password does not match");
+			return "redirect:/login";
 		}
-		UniqueUser currentUser = currentUserOptional.get();
-//
-//	        if (!passwordEncoder.matches(oldPassword, currentUser.getPassword())) {
-//	            model.addAttribute("error", "Incorrect old password");
-//	            return "profileSetting";
-//	        }
-//
-//	        if (!newPassword.equals(confirmNewPassword.endsWith(confirmNewPassword))) {
-//	            model.addAttribute("error", "New passwords do not match");
-//	            return "profileSetting";
-//	        }
-
-	        currentUser.setPassword(passwordEncoder.encode(newPassword));
-	        uniqueUserService.save(currentUser);
-	        model.addAttribute("success", "Password changed successfully");
-	        return "profileSetting";
-	    
+		
 }
 	
 		@GetMapping("/settings")
 		public String goToProfileSettings() {
 		return "profileSetting";
+		
 }
 }

@@ -18,6 +18,8 @@ import com.fdmgroup.ChatProject.repository.UniqueUserRepository;
 
 
 
+
+
 @Service
 public class DefaultUniqueUserDetailsService implements UserDetailsService {
 
@@ -46,12 +48,26 @@ public class DefaultUniqueUserDetailsService implements UserDetailsService {
 	uniqueUserRepository.save(uniqueUser);
 	}
 	
+	public void saveUserToDb(UniqueUserPrincipal uniqueUserPrincipal) {
+		uniqueUserRepository.save(uniqueUserPrincipal.getUniqueUser());
+	}
+	
 	public UniqueUser findByUniqueUserEmile(String emileAdress) {
 		Optional<UniqueUser>optionalUniqueUser = uniqueUserRepository.findByEmailAdress(emileAdress);
 		UniqueUser uniqueUser = optionalUniqueUser.orElse(new UniqueUser("default name")); // if user hasn't been found, then it returns new user with default name
 		return uniqueUser;
 		
 	}
+	
+	public UserDetails loadUserByIdForPasswordChange(Long id) throws UsernameNotFoundException {
+		Optional<UniqueUser> uniqueUser = uniqueUserRepository.findById(id);
+
+		if (uniqueUser.isPresent()) {
+			return new UniqueUserPrincipal(uniqueUser.get());
+		}
+		throw new UsernameNotFoundException("User not found");
+	}
+
 //	
 //	private  Authentication authentication;
 //	
