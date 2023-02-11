@@ -11,6 +11,12 @@
 	padding: 4px;
 }
 
+.displayFriend{
+	margin: 5px;
+}
+
+
+
 .chat{
 	grid-column: 2;
 /*	border: 3px solid blue;
@@ -18,6 +24,42 @@
 	margin: 5px;
 	padding: 4px;
 }
+
+.chatWindow{
+	border: 3px solid black;
+	border-radius: 5px;	
+	background-color: rgb(200,200,200);
+}
+
+
+.chatMessage{
+	display: grid;
+	grid-template-columns: c c;
+	
+}
+
+.outgoingMessage{
+	grid-column: 1;
+border-radius: 5px;
+	border: 1px solid blue;
+		background-color: rgb(126,192,238);
+	margin: 5px;
+}
+
+.incommingMessage{
+	grid-column: 2;
+	border-radius: 5px;
+	border: 1px solid green;
+	background-color: rgb(193,255,193);
+	margin: 5px;
+}
+
+.sendingMessage{
+	border-top: 3px black solid;
+	padding-top: 5px;
+	margin:5px;	
+}
+
 
 .groupChat{
 	grid-column: 3;
@@ -27,15 +69,9 @@
 	padding: 4px;
 }
 
-.outgoingMessage{
-	justify-content: flex-start;
-	border: 1px solid blue;
+
+.displayGroupChat{
 	margin: 5px;
 }
 
-.incommingMessage{
-	justify-content: flex-end;
-	border: 1px solid green;
-	margin: 5px;
-}
 

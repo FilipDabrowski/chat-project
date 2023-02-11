@@ -1,6 +1,5 @@
 package com.fdmgroup.ChatProject.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fdmgroup.ChatProject.model.Chat;
 import com.fdmgroup.ChatProject.model.ChatUser;
-import com.fdmgroup.ChatProject.model.Message;
 import com.fdmgroup.ChatProject.model.UniqueUser;
 import com.fdmgroup.ChatProject.service.interfaces.IChatService;
 import com.fdmgroup.ChatProject.service.interfaces.IChatUserService;
@@ -80,4 +78,10 @@ public class ChatUserProfileController {
 		return "indexChat";
 	}
 
+	
+	
+	
+	
+	
+	
 }

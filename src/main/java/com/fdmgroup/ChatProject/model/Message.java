@@ -43,13 +43,13 @@ public class Message {
 
 	public Message() {
 		this.timestamp = LocalDateTime.now();
-		this.timeString = timestamp.format(DateTimeFormatter.ofPattern("yyyy.MM.dd  hh.mm"));
+		this.timeString = timestamp.format(DateTimeFormatter.ofPattern("dd.MM.yyyy  hh.mm"));
 	}
 
 	public Message(String message, ChatUser sender, Chat chat) {
 		this.message = message;
 		this.timestamp = LocalDateTime.now();
-		this.timeString = timestamp.format(DateTimeFormatter.ofPattern("yyyy.MM.dd  hh.mm"));
+		this.timeString = timestamp.format(DateTimeFormatter.ofPattern("dd.MM.yyyy  hh.mm"));
 		this.sender = sender;
 		this.chat = chat;	
 	}
@@ -57,7 +57,7 @@ public class Message {
 	public Message(String message, LocalDateTime timestamp, ChatUser sender, Chat chat) {
 		this.message = message;
 		this.timestamp = timestamp;
-		this.timeString = timestamp.format(DateTimeFormatter.ofPattern("yyyy.MM.dd  hh.mm"));
+		this.timeString = timestamp.format(DateTimeFormatter.ofPattern("dd.MM.yyyy  hh.mm"));
 		this.sender = sender;
 		this.chat = chat;
 	}

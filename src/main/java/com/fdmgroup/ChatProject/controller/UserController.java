@@ -22,6 +22,8 @@ import com.fdmgroup.ChatProject.security.DefaultUniqueUserDetailsService;
 import com.fdmgroup.ChatProject.security.UniqueUserPrincipal;
 import com.fdmgroup.ChatProject.service.ChatUserService;
 import com.fdmgroup.ChatProject.service.UniqueUserService;
+import com.fdmgroup.ChatProject.service.interfaces.IBannedUserService;
+import com.fdmgroup.ChatProject.service.interfaces.IRoleService;
 
 @Controller
 public class UserController {
@@ -34,9 +36,20 @@ public class UserController {
 	private DefaultUniqueUserDetailsService defaultUniqueUserDetailsService;
 
 	@Autowired
+<<<<<<< HEAD
 	BCryptPasswordEncoder passwordEncoder;
 	//private PasswordEncoder passwordEncoder;
 
+=======
+	private IRoleService roleService;
+	
+	@Autowired
+	private IBannedUserService bannedUserService;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+	
+>>>>>>> FrontEndWorking
 //	@GetMapping("/change-password")
 //	public String changePasswordPage(@ModelAttribute("uniqueUser") UniqueUser uniqueUser) {
 //			
@@ -99,6 +112,7 @@ public class UserController {
 			System.out.println("password does not match");
 			return "redirect:/login";
 		}
+<<<<<<< HEAD
 
 	}
 
@@ -114,6 +128,30 @@ public class UserController {
 
 		}
 
+=======
+		
+}
+	
+		@GetMapping("/settings")
+		public String goToProfileSettings(ModelMap model,Authentication authentication) {
+			
+			
+			String name = authentication.getName();
+			Optional<UniqueUser> uniqueUserOpt = uniqueUserService.findByName(name);
+			
+			if(uniqueUserOpt.isPresent()) {
+			Optional<ChatUser> chatUserOpt = chatUserService.findByUser(uniqueUserOpt.get());		
+			chatUserOpt.ifPresent((chatUser)-> model.addAttribute("currentUser",chatUser));
+			
+			if(chatUserOpt.get().getUser().getRole().equals(roleService.findByRoleName("Admin"))) {
+				model.addAttribute("bannedUsers",bannedUserService.findAll());
+				return "/admin/allSetting";
+			}
+			
+			}
+			
+			
+>>>>>>> FrontEndWorking
 		return "profileSetting";
 
 	}

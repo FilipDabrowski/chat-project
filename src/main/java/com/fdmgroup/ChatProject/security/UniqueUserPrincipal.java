@@ -62,8 +62,8 @@ public class UniqueUserPrincipal implements UserDetails {// wrapper class of Uni
 
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return true;
+
+		return !uniqueUser.isLocked();
 	}
 
 	@Override

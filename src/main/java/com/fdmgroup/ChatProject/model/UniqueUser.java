@@ -20,6 +20,7 @@ public class UniqueUser {
 	private String emailAdress;
 	private Role role;
 	
+	private boolean isLocked;
 	
 
 	public UniqueUser() {
@@ -111,6 +112,18 @@ public class UniqueUser {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+
+
+	public boolean isLocked() {
+		return isLocked;
+	}
+
+
+
+	public void setLocked(boolean isLocked) {
+		this.isLocked = isLocked;
 	}
 
 }
