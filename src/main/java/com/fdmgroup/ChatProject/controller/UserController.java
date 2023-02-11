@@ -105,6 +105,7 @@ public class UserController {
 		Optional<ChatUser> currentChatUserOptional = chatUserService.findById(id);
 		UniqueUser currentUniqueUser = currentChatUserOptional.get().getUser();
 		boolean isPasswordSame = passwordEncoder.matches(oldPassword, currentUniqueUser.getPassword());
+		
 		//String hashedNewPassword = passwordEncoder.encode(newPassword);
 		
 		//UserDetails userDetails = defaultUniqueUserDetailsService.loadUserByIdForPasswordChange(id);
@@ -154,7 +155,7 @@ public class UserController {
 				model.addAttribute("bannedUsers",bannedUserService.findAll());
 				return "/admin/allSetting";
 			}
-			return "profileSetting";
+			//return "profileSetting";
 			}
 			
 			
