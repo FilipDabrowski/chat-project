@@ -22,6 +22,7 @@
 		
 		<div class="editingProfile">
 		<h3>Editing Profile</h3>
+		
 		<form action="/editProfil/${currentUser.id}" method="post">
 		<div>
 						<label> NickName: </label>
@@ -34,6 +35,7 @@
 						<input type="text" value="${currentUser.user.emailAdress}">
 		</div><div>
 				<input type="submit" value="edit Profile">
+	
 		
 		</div>
 		</form><br>

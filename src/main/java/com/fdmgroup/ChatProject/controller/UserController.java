@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -61,19 +62,35 @@ public class UserController {
   @PostMapping ("/editProfile/{id}")
   public String editProfile(@PathVariable Long id, @RequestParam("nickName") String nickName,
 			@RequestParam("name") String name,
-			@RequestParam("emailAdress") String emailAdress, Model model) {
-	  		
-	  		Optional<ChatUser> currentChatUserOptional = chatUserService.findById(id);
+			@RequestParam("emailAdress") String emailAdress, ModelMap model, Authentication authentication) {
+
+	  Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	 //model.addAttribute("currentUser", ChatUser);		
+	  
+	 
+		
+		
+	  
+	  Optional<ChatUser> currentChatUserOptional = chatUserService.findById(id);
 	  		ChatUser currentChatUser = currentChatUserOptional.get();
 	  		UniqueUser currentUniqueUser = currentChatUserOptional.get().getUser();
-	  		
+	  	 model.addAttribute("currentUser",currentChatUser);
 	  		currentUniqueUser.setName(name);
 	  		currentUniqueUser.setEmailAdress(emailAdress);
+	  		currentUniqueUser.setRole(currentUniqueUser.getRole());
+	  		System.out.println(currentUniqueUser.getRole().getRoleName()+ "nazwa roli");
 	  		currentChatUser.setNickName(nickName);
 	  		
 	  		uniqueUserService.save(currentUniqueUser);
 	  		chatUserService.save(currentChatUser);
-	  return "redirect:/settings";
+	  		roleService.findByRoleName("Admin");
+			if(currentChatUser.getUser().getRole().equals(roleService.findByRoleName("Admin"))) {
+				System.out.println("ADMINADMIN");
+				model.addAttribute("bannedUsers",bannedUserService.findAll());
+				return "/admin/allSetting";
+			}
+			return "profileSetting";
+			
   }
   
 //  @GetMapping("/editProfile/{id}")
