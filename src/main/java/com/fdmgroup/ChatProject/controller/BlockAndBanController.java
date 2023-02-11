@@ -44,7 +44,7 @@ public class BlockAndBanController {
 
 		userToBanOpt.ifPresent(user -> {
 			if (!user.equals(currUser)) {
-				chatUserService.addUserToBannedList(user, currUser);
+				chatUserService.addUserToBlockedList(user, currUser);
 			}
 		});
 
