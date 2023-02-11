@@ -43,12 +43,6 @@ public class UniqueUser {
 	}
 
 
-
-	
-
-	
-	
-	
 	@Override
 	public int hashCode() {
 		return Objects.hash(emailAdress, name, password, role);

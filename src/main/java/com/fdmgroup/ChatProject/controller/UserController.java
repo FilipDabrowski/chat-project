@@ -48,7 +48,23 @@ public class UserController {
 //		public String changePasswordPage(@ModelAttribute("uniqueeUser") UniqueUser uniqueUser) {
 //		return "/changePassword/{id}";
 //	}
-
+  @PostMapping ("/editProfile/{id}")
+  public String editProfile(@PathVariable Long id, @RequestParam("nickName") String nickName,
+			@RequestParam("name") String name,
+			@RequestParam("emailAdress") String emailAdress, Model model) {
+	  		
+	  		Optional<ChatUser> currentChatUserOptional = chatUserService.findById(id);
+	  		ChatUser currentChatUser = currentChatUserOptional.get();
+	  		UniqueUser currentUniqueUser = currentChatUserOptional.get().getUser();
+	  		
+	  		currentUniqueUser.setName(name);
+	  		currentUniqueUser.setEmailAdress(emailAdress);
+	  		currentChatUser.setNickName(nickName);
+	  		
+	  		uniqueUserService.save(currentUniqueUser);
+	  		chatUserService.save(currentChatUser);
+	  return"redirect:/profileSettings";
+  }
 	@PostMapping("/changePassword/{id}")
 	public String changePassword(@PathVariable Long id, @RequestParam("oldPassword") String oldPassword,
 			@RequestParam("newPassword") String newPassword,
@@ -61,7 +77,7 @@ public class UserController {
 		
 		//UserDetails userDetails = defaultUniqueUserDetailsService.loadUserByIdForPasswordChange(id);
 		//UniqueUserPrincipal uniqueUserPrincipal = (UniqueUserPrincipal) userDetails;
-		Long idUniqueUser = currentUniqueUser.getId();
+		//Long idUniqueUser = currentUniqueUser.getId();
 		if (isPasswordSame == true) {
 			System.out.println("haslo ok");
 			
