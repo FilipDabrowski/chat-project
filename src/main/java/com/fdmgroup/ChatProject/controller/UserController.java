@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -35,12 +35,10 @@ public class UserController {
 	@Autowired
 	private DefaultUniqueUserDetailsService defaultUniqueUserDetailsService;
 
-	@Autowired
-<<<<<<< HEAD
-	BCryptPasswordEncoder passwordEncoder;
+
 	//private PasswordEncoder passwordEncoder;
 
-=======
+@Autowired
 	private IRoleService roleService;
 	
 	@Autowired
@@ -48,8 +46,7 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	
->>>>>>> FrontEndWorking
+
 //	@GetMapping("/change-password")
 //	public String changePasswordPage(@ModelAttribute("uniqueUser") UniqueUser uniqueUser) {
 //			
@@ -76,12 +73,17 @@ public class UserController {
 	  		
 	  		uniqueUserService.save(currentUniqueUser);
 	  		chatUserService.save(currentChatUser);
-	  return"redirect:/profileSettings";
+	  return "redirect:/settings";
   }
+  
+//  @GetMapping("/editProfile/{id}")
+//  public String goToEditProfileAfterSettings(){
+//	  return "profileSettings";
+//  }
 	@PostMapping("/changePassword/{id}")
 	public String changePassword(@PathVariable Long id, @RequestParam("oldPassword") String oldPassword,
 			@RequestParam("newPassword") String newPassword,
-			@RequestParam("confirmNewPassword") String confirmNewPassword, Model model) {
+			@RequestParam("confirmNewPassword") String confirmNewPassword, ModelMap model) {
 		
 		Optional<ChatUser> currentChatUserOptional = chatUserService.findById(id);
 		UniqueUser currentUniqueUser = currentChatUserOptional.get().getUser();
@@ -106,52 +108,40 @@ public class UserController {
 			//userDetails = (UserDetails) uniqueUserPrincipal;
 			//defaultUniqueUserDetailsService.saveUserToDb(uniqueUserPrincipal);
 
-			return "redirect:/login";
+			return "login";
 
 		} else {
 			System.out.println("password does not match");
-			return "redirect:/login";
+			return "login";
 		}
-<<<<<<< HEAD
+
 
 	}
 
-	@GetMapping("/settings")
-	public String goToProfileSettings(ModelMap model, Authentication authentication) {
-
-		String name = authentication.getName();
-		System.out.println(name);
-		Optional<UniqueUser> uniqueUserOpt = uniqueUserService.findByName(name);
-		if (uniqueUserOpt.isPresent()) {
-			Optional<ChatUser> chatUserOpt = chatUserService.findByUser(uniqueUserOpt.get());
-			chatUserOpt.ifPresent((chatUser) -> model.addAttribute("currentUser", chatUser));
-
-		}
-
-=======
-		
-}
-	
 		@GetMapping("/settings")
-		public String goToProfileSettings(ModelMap model,Authentication authentication) {
+		public String goToProfileSttings(ModelMap model,Authentication authentication) {
 			
 			
 			String name = authentication.getName();
+			System.out.println(name);
 			Optional<UniqueUser> uniqueUserOpt = uniqueUserService.findByName(name);
 			
 			if(uniqueUserOpt.isPresent()) {
+				System.out.println("User is present");
 			Optional<ChatUser> chatUserOpt = chatUserService.findByUser(uniqueUserOpt.get());		
 			chatUserOpt.ifPresent((chatUser)-> model.addAttribute("currentUser",chatUser));
 			
+			roleService.findByRoleName("Admin");
 			if(chatUserOpt.get().getUser().getRole().equals(roleService.findByRoleName("Admin"))) {
+				System.out.println("ADMINADMIN");
 				model.addAttribute("bannedUsers",bannedUserService.findAll());
 				return "/admin/allSetting";
 			}
-			
+			return "profileSetting";
 			}
 			
 			
->>>>>>> FrontEndWorking
+
 		return "profileSetting";
 
 	}

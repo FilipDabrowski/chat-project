@@ -22,7 +22,7 @@
 		
 		<div class="editingProfile">
 		<h3>Editing Profile</h3>
-		<form action="/editingProfil/${currentUser.id}" method="post">
+		<form action="/editProfil/${currentUser.id}" method="post">
 		<div>
 						<label> NickName: </label>
 						<input type="text" value="${currentUser.nickName}">
@@ -76,7 +76,7 @@
 				<div class="displayFriend">
 					<form action="/deletFriend/${friendUser.id}" method="post">
 						<label> ${friendUser.nickName}</label>
-						<input type="submit" value="delete">
+						<input type="button" value="delete">
 					</form>	
 				</div>
 			</c:forEach>
@@ -84,15 +84,11 @@
 		
 		<div class="blockedUser">
 			<h3>Blocked User</h3>
-			<form action="/blockUser" method="post">
-				<input type="text" placeholder="nickName">
-				<input type="submit" value="Block User">
-			</form>
 			<c:forEach items="${currentUser.blockedUsers}" var="blockedUser">
 				<div class="displayBlockedUser">
 					<form action="/unBlock/${blockedUser.id}" method="post">
 						<label> ${blockedUser.nickName}</label>
-						<input type="submit" value="unBlock">
+						<input type="button" value="unBlock">
 					</form>	
 				</div>
 			</c:forEach>
