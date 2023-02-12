@@ -91,7 +91,9 @@ section {
 		<a href="/forgotPassword">Forgot Password</a> <br> <br> 
 			<div class="container signin">
 	<p>Don't have an account yet?</p>
-	<a href="/register">Register here</a>
+	<form action="/register" method="get">
+	<button type="submit"><a href="/register">Register here</a></button>
+	
 	</div>
 	</section>
 </main>
