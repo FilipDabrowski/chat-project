@@ -33,16 +33,17 @@ public class BlockAndBanController {
 	private IBannedUserService bannedUserService;
 
 	@PostMapping("/blockUser")
-	public String blockUser(ModelMap model, Authentication authentication, @RequestParam("nickName") String nickName) {
+	public String blockUser(ModelMap model, Authentication authentication,
+			@RequestParam("nickName") String nickName) {
 
 		String name = authentication.getName();
 		Optional<UniqueUser> uniqueUserOpt = uniqueUserService.findByName(name);
 		Optional<ChatUser> chatUserOpt = chatUserService.findByUser(uniqueUserOpt.get());
 		ChatUser currUser = chatUserOpt.get();
 
-		Optional<ChatUser> userToBanOpt = chatUserService.findByNickName(nickName);
+		Optional<ChatUser> userToBlockOpt = chatUserService.findByNickName(nickName);
 
-		userToBanOpt.ifPresent(user -> {
+		userToBlockOpt.ifPresent(user -> {
 			if (!user.equals(currUser)) {
 				chatUserService.addUserToBlockedList(user, currUser);
 			}
@@ -52,8 +53,10 @@ public class BlockAndBanController {
 		return getReturnPage(model, currUser);
 	}
 
+	
 	@PostMapping("/banUser")
-	public String banUser(ModelMap model, Authentication authentication, @RequestParam("nickName") String nickName) {
+	public String banUser(ModelMap model, Authentication authentication,
+			@RequestParam("nickName") String nickName) {
 
 		String name = authentication.getName();
 		Optional<UniqueUser> uniqueUserOpt = uniqueUserService.findByName(name);
@@ -66,7 +69,7 @@ public class BlockAndBanController {
 
 			if (!bannedUserService.findByBannedUser(userToBan).isPresent()) {
 				BannedUser bannedUser = new BannedUser(userToBan);
-				if (!bannedUser.getBannedUser().getUser().getRole().getRoleName().equals("Admin")) {
+				if (!bannedUser.getBannedUser().getUser().getRole().equals(roleService.findByRoleName("Admin"))) {
 					bannedUser.getBannedUser().getUser().setLocked(true);
 					bannedUserService.save(bannedUser);
 				}
@@ -143,13 +146,7 @@ public class BlockAndBanController {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
+
 	private String getReturnPage(ModelMap model, ChatUser user) {
 
 		if (user.getUser().getRole().equals(roleService.findByRoleName("Admin"))) {

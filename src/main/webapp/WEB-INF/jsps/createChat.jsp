@@ -24,7 +24,7 @@
 				<c:forEach items="${currentUser.friendList}" var="friendUser">
 					<div class="displayFriend">
 						<label>${friendUser.nickName}</label>
-						<input type="checkbox" name="params" value="${friendUser.nickName}">
+						<input type="checkbox" name="userToAdd" value="${friendUser.nickName}">
 					</div>
 				</c:forEach>
 				<input type="submit" value="create Chat">

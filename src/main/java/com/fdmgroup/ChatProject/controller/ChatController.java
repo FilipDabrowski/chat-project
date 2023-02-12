@@ -87,7 +87,13 @@ public class ChatController {
 	
 	@PostMapping("/createNewGroupChat")
 	public String createNewGroupChat(ModelMap model,Authentication authentication) {
-		addUserToModel(model,authentication);
+		String name = authentication.getName();
+		Optional<UniqueUser> uniqueUserOpt = uniqueUserService.findByName(name);
+		
+		if(uniqueUserOpt.isPresent()) {
+		Optional<ChatUser> chatUserOpt = chatUserService.findByUser(uniqueUserOpt.get());		
+		chatUserOpt.ifPresent((chatUser)-> model.addAttribute("currentUser",chatUser));
+		}
 		return "createChat";
 	}
 	
@@ -96,7 +102,7 @@ public class ChatController {
 	@PostMapping("/createChat")
 	public String createChat(ModelMap model,Authentication authentication,
 			@RequestParam("chatName") String chatName,
-			@RequestParam("params") String[] params) {
+			@RequestParam("userToAdd") String[] userToAdd) {
 		
 		String name = authentication.getName();
 		Optional<UniqueUser> uniqueUserOpt = uniqueUserService.findByName(name);
@@ -108,14 +114,14 @@ public class ChatController {
 		chatService.addUserToChat(chat, chatUserOpt.get());
 		
 
-		for(String val: params) {
+		for(String val: userToAdd) {
 				chatService.addUserToChat(chat, chatUserService.findByNickName(val).get());
 		}
 		chatService.save(chat);
 		
 		
 		chatUserService.addChatToUser(chatUserOpt.get(),chat);
-		for(String val: params) {
+		for(String val: userToAdd) {
 				chatUserService.addChatToUser(chatUserService.findByNickName(val).get(),chat);
 			}
 
@@ -123,33 +129,5 @@ public class ChatController {
 		 model.addAttribute("currentUser",chatUserOpt.get());
 		return "indexChat";
 	}
-	
-	
-	private void addUserToModel(ModelMap model,Authentication authentication) {
-		String name = authentication.getName();
-		Optional<UniqueUser> uniqueUserOpt = uniqueUserService.findByName(name);
-		
-		if(uniqueUserOpt.isPresent()) {
-		Optional<ChatUser> chatUserOpt = chatUserService.findByUser(uniqueUserOpt.get());		
-		chatUserOpt.ifPresent((chatUser)-> model.addAttribute("currentUser",chatUser));
-		}
-		
-	}
-	
-	
-//	@PostMapping("/addUser/{userID}/ToChat/{ChatID}")
-//	public String add(ModelMap model, @PathVariable("userID") long userID, @PathVariable("chatID") long chatID) {
-//		
-//		ChatUser user = chatUserService.findById(userID);
-//		Chat chat = chatService.findById(chatID);
-//		
-//		chatService.addUserToChat(chat,user); 
-//		chatService.save(chat);
-//		
-//		
-//		return "somePage";
-//		
-//		
-//	}
 
 }
