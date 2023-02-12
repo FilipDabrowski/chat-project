@@ -81,8 +81,8 @@ public class UserControllerTest {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	@Mock
-	Authentication authentication;
+//	@Mock
+//	Authentication authentication;
 //	@MockBean
 //	private PasswordEncoder passwordEncoder;
 	
@@ -195,7 +195,7 @@ public void goToProfileSettings_UserPresent_ReturnsProfileSettingView() throws E
  
   Optional<ChatUser> chatUserOpt = Optional.of(chatUser);
   
-  when(authentication.getName()).thenReturn("testUser");
+  //when(authentication.getName()).thenReturn("testUser");
   when(uniqueUserService.findByName("testUser")).thenReturn(Optional.of(uniqueUser));
   when(chatUserService.findByUser(uniqueUser)).thenReturn(chatUserOpt);
   when(roleService.findByRoleName("User")).thenReturn(new Role("User"));
@@ -216,7 +216,7 @@ public void goToProfileSettings_AdminPresent_ReturnsProfileSettingView() throws 
  
   Optional<ChatUser> chatUserOpt = Optional.of(chatUser);
   
-  when(authentication.getName()).thenReturn("testAdmin");
+  //when(authentication.getName()).thenReturn("testAdmin");
   when(uniqueUserService.findByName("testAdmin")).thenReturn(Optional.of(uniqueUser));
   when(chatUserService.findByUser(uniqueUser)).thenReturn(chatUserOpt);
   when(roleService.findByRoleName("Admin")).thenReturn(new Role("Admin"));
