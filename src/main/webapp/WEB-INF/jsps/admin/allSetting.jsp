@@ -16,7 +16,6 @@
 <div style="display: flex; justify-content: center;">
 <h1>ADMIN SETTINGS</h1>
 </div>
-
 <div class="gridContainer">
 
 
@@ -55,6 +54,21 @@
 		</form>
 		
 		</div>
+		<%-- Show error message if there is one --%>
+<c:if test="${not empty error}">
+  <div class="error-message">
+    <h3><font color="red">${error}</font></h3>
+  </div>
+</c:if>
+
+<%-- Show success message if there is one --%>
+<c:if test="${not empty success}">
+  <div class="success-message">
+    <h3><font color="green">${success}</font></h3>
+  </div>
+</c:if>
+
+
 
 		<div class="friendList">
 			<h3>Friend List</h3>

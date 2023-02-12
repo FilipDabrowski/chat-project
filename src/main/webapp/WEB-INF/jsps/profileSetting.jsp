@@ -21,18 +21,17 @@
 
 		
 		<div class="editingProfile">
-		<h3>Editing Profile</h3>
-		
-		<form action="/editProfil/${currentUser.id}" method="post">
+		<h3>Editing Profile</h3>	
+		<form action="/editProfile/${currentUser.id}" method="post">
 		<div>
 						<label> NickName: </label>
-						<input type="text" value="${currentUser.nickName}">
+						<input type="text" name= "nickName" value="${currentUser.nickName}">
 		</div><div>
 						<label> Real Name: </label>
-						<input type="text" value="${currentUser.user.name}">
+						<input type="text" name="name" value="${currentUser.user.name}">
 		</div><div>
 						<label> Email Address: </label>
-						<input type="email" value="${currentUser.user.emailAdress}">
+						<input type="email" name= "emailAdress"  value="${currentUser.user.emailAdress}">
 		</div><div>
 				<input type="submit" value="edit Profile">
 	

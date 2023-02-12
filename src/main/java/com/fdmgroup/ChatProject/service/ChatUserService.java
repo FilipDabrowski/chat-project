@@ -79,27 +79,28 @@ public class ChatUserService implements IChatUserService{
 	return Optional.of(userList.get(0));
 	}
 
-	@Override
-	public void addUserToBannedList(ChatUser user, ChatUser currUser) {
+//	@Override
+	public void addUserToBlockedList(ChatUser user, ChatUser currUser) {
 		
-		Collection<ChatUser> bannedList = currUser.getBlockedUsers();
+		Collection<ChatUser> blockedList = currUser.getBlockedUsers();
 		
-		if(bannedList.contains(user)) {
+		if(blockedList.contains(user)) {
 			return;
 		}
-		bannedList.add(user);
+		blockedList.add(user);
 		save(currUser);
 		
 	}
 
 	@Override
 	public void unblockUser(ChatUser userToUnblock, ChatUser currUser) {
-		Collection<ChatUser> bannedList = currUser.getBlockedUsers();
+		Collection<ChatUser> blockedList = currUser.getBlockedUsers();
 		
-		if(bannedList.contains(userToUnblock)) {
-			bannedList.remove(userToUnblock);
+		if(blockedList.contains(userToUnblock)) {
+			blockedList.remove(userToUnblock);
+			save(currUser);
 		}
-		save(currUser);
+		
 	}
 
 	@Override
@@ -108,8 +109,9 @@ public class ChatUserService implements IChatUserService{
 		
 		if(friendList.contains(userToUnfriend)) {
 			friendList.remove(userToUnfriend);
+			save(currUser);
 		}
-		save(currUser);
+		
 	}
 
 }

@@ -92,13 +92,6 @@ public class DataImport implements ApplicationRunner {
 		uniqueUserService.save(user9);	
 		ChatUser user9Chat = new ChatUser("nick 9 user", user9);
 		chatUserService.save(user9Chat);
-		
-	
-		
-
-		
-		
-		System.out.println("End of Data Import");
 }
 
 }
