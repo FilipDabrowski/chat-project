@@ -55,7 +55,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 
 @SpringBootTest
-	@AutoConfigureMockMvc
+@AutoConfigureMockMvc
 @WebAppConfiguration
 @ContextConfiguration(classes = ChatProjectApplication.class)
 

@@ -72,19 +72,22 @@ public class LoginAndRegisterController {
 
 	@PostMapping("/register")
 	public String registerSubmit(@ModelAttribute("user") UniqueUser user, ModelMap model) {
-		UniqueUser userFromDatabase = defaultUniqueUserDetailsService.findByUniqueUserEmile(user.getName());
-		if (userFromDatabase.getEmailAdress().equals(user.getEmailAdress())) {
+		
+		UniqueUser userFromDatabase = defaultUniqueUserDetailsService.findByUniqueUserEmile(user.getEmailAdress());
+		
+		if (userFromDatabase != null && userFromDatabase.getEmailAdress().equals(user.getEmailAdress())) {
 			model.addAttribute("message", "This user name already exists");
 			return "register";
 		}
-
+		else {
 		user.setRole(roleService.findByRoleName("Customer"));
 		user.setPassword(encoder.encode(user.getPassword()));
 		defaultUniqueUserDetailsService.saveUniqueUser(user);
 		// model.addAttribute("chatusers", defaultUniqueUserDetailsService.());
 		return "index";
 	}
-
+	}
+	
 	@ExceptionHandler(UsernameNotFoundException.class)
 	public ModelAndView handleUsernameNotFoundException(UsernameNotFoundException ex) {
 		ModelAndView mav = new ModelAndView();

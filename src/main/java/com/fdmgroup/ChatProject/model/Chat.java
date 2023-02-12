@@ -112,6 +112,11 @@ public class Chat {
 		return "Chat [chattingUsers=" + chattingUsers + ", starttimeOfChat=" + starttimeOfChat + "]";
 	}
 
+	public void setId(Long id) {
+		this.id = id;
+		
+	}
+
 
 
 	
