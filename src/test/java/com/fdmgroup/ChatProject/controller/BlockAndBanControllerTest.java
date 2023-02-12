@@ -24,6 +24,7 @@ import com.fdmgroup.ChatProject.service.ChatUserService;
 import com.fdmgroup.ChatProject.service.RoleService;
 import com.fdmgroup.ChatProject.service.UniqueUserService;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -148,6 +149,7 @@ public class BlockAndBanControllerTest {
 				.andExpect(view().name("/admin/allSetting"));
 		
 		then(procrssUniqueUserMock).should().setLocked(true);
+		then(bannedUserServiceMock).should().save(any());
 	}
 	
 	@Test
