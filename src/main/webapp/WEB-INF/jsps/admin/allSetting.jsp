@@ -32,7 +32,7 @@
 						<input type="text" name="name" value="${currentUser.user.name}">
 		</div><div>
 						<label> Email Address: </label>
-						<input type="text" name= "emailAdress" value="${currentUser.user.emailAdress}">
+						<input type="email" name= "emailAdress" value="${currentUser.user.emailAdress}">
 		</div><div>
 				<input type="submit" value="edit Profile">
 		
