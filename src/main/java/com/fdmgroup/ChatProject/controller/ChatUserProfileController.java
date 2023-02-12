@@ -55,7 +55,7 @@ public class ChatUserProfileController {
 			ChatUser friendChatUser = friendChatUserOpt.get();
 
 			
-			
+
 			
 			if (!currChatUser.equals(friendChatUser) && !currChatUser.getFriendList().contains(friendChatUser)) {
 				chatUserService.addFrindToList(currChatUser, friendChatUser);

@@ -55,6 +55,7 @@ public class MessageController {
 		
 		if(currChatOpt.isPresent()) {
 		Message sendMessage = new Message(message, chatUserOpt.get(), currChatOpt.get());
+		
 		messageService.save(sendMessage);
 		List<Message> chatMessages = messageService.findByChat(currChatOpt.get());
 		model.addAttribute("chatMessages", chatMessages);		

@@ -72,6 +72,14 @@ public class ChatUser {
 		this.blockedUsers = blockedUsers;
 		this.chats = chats;
 	}
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getNickName() {
 		return nickName;
@@ -135,9 +143,7 @@ public class ChatUser {
 		return "ChatUser [nickName=" + nickName + ", user=" + user + "]";
 	}
 
-	public Long getId() {
-		return id;
-	}
+	
 
 
 	

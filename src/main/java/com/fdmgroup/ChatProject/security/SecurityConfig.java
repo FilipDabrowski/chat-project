@@ -9,9 +9,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+	
 
 @Configuration
 @EnableWebSecurity
@@ -28,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
     PasswordEncoder encoder() { // coding our password( string of symbols)
         return new BCryptPasswordEncoder();
-    }
+	}
     
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -42,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		//or for logged user or let us create custom forms to login. Who can see and do what. 
 		http
 			.authorizeRequests()
-			.antMatchers("/login", "/registration", "/error").permitAll()
+			.antMatchers("/login", "/registration", "/error","/h2/**").permitAll()
 			//what we can see without login
 				//.antMatchers("/css/**", "/js/**", "/h2/**"/*h2 not suitable for production level app*/, "WEB-INF/jsps/**", "/", "/**/*.png", "/register").permitAll()
 				// any url with/admin/...something.. user can see if has role ADMIN
@@ -68,6 +70,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				
 				.deleteCookies("JSESSIONID")
 				.and()
+				// .sessionManagement()
+		        // .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+		       //  .and()
 			.csrf()
 				.disable()	// So we don't have to add csrf to every form, using tags on each of our forms
 			.httpBasic()

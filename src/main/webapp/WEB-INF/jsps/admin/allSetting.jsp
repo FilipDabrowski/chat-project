@@ -16,23 +16,22 @@
 <div style="display: flex; justify-content: center;">
 <h1>ADMIN SETTINGS</h1>
 </div>
-
 <div class="gridContainer">
 
 
 		
 		<div class="editingProfile">
 		<h3>Editing Profile</h3>
-		<form action="/editingProfil/${currentUser.id}" method="post">
+		<form action="/editProfile/${currentUser.id}" method="post">
 		<div>
 						<label> NickName: </label>
-						<input type="text" value="${currentUser.nickName}">
+						<input type="text" name= "nickName" value="${currentUser.nickName}">
 		</div><div>
 						<label> Real Name: </label>
-						<input type="text" value="${currentUser.user.name}">
+						<input type="text" name="name" value="${currentUser.user.name}">
 		</div><div>
 						<label> Email Address: </label>
-						<input type="text" value="${currentUser.user.emailAdress}">
+						<input type="email" name= "emailAdress" value="${currentUser.user.emailAdress}">
 		</div><div>
 				<input type="submit" value="edit Profile">
 		
@@ -41,13 +40,13 @@
 		<form action="/changePassword/${currentUser.id}" method="post">
 		<div>		
 						<label> Old Password: </label>
-						<input type="password" placeholder="password">
+						<input type="password" name = "oldPassword" placeholder="password">
 		</div><div>
 						<label> New Password: </label>
-						<input type="password" placeholder="new password">
+						<input type="password" name = "newPassword"  placeholder="new password">
 		</div><div>
 						<label> Confirm New Password: </label>
-						<input type="password" placeholder="new password">
+						<input type="password" name = "confirmNewPassword"  placeholder="new password">
 		</div><div>
 				<input type="submit" value="change Password">
 		</div>
@@ -55,6 +54,21 @@
 		</form>
 		
 		</div>
+		<%-- Show error message if there is one --%>
+<c:if test="${not empty error}">
+  <div class="error-message">
+    <h3><font color="red">${error}</font></h3>
+  </div>
+</c:if>
+
+<%-- Show success message if there is one --%>
+<c:if test="${not empty success}">
+  <div class="success-message">
+    <h3><font color="green">${success}</font></h3>
+  </div>
+</c:if>
+
+
 
 		<div class="friendList">
 			<h3>Friend List</h3>
