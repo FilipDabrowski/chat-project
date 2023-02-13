@@ -134,7 +134,7 @@ public class MessageControllerTest {
 	       verify(uniqueUserService, times(1)).findByName(name);
 	       verify(chatUserService, times(1)).findByUser(uniqueUser);
 	       verify(chatService, times(1)).findById(Long.parseLong(chatID));
-	      verify(messageService, times(1)).save(any());// how to ????? 
+	      verify(messageService, times(1)).save(any(Message.class));// how to ????? 
 	      verify(messageService, times(1)).findByChat(chat);
 	      }
 	}
