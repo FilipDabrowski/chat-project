@@ -51,10 +51,6 @@ public class LoginAndRegisterController {
 	@Autowired
 	ChatUserService chatUserService;
 
-//	@GetMapping(value = "/")
-//	public String goToIndex() {
-//		return "indexChat";
-//	}
 
 	@GetMapping(value = "/indexChat")
 	public String goToIndexChat(ModelMap model, Authentication authentication) {
@@ -82,35 +78,6 @@ public class LoginAndRegisterController {
 	}
 
 	
-	
-//	@PostMapping("/register")
-//	public String registerUser(@ModelAttribute ChatUser chatUser, @RequestParam("confirmPassword") String confirmPassword, Model model) {
-//		
-//	    ChatUser existingChatUser = chatUserService.findByNickName(chatUser.getNickName()).get();
-//	    if (existingChatUser != null) {
-//	        model.addAttribute("errorMessage", "Email already exists.");
-//	        return "register";
-//	    }
-//	    
-//	    if (!chatUser.getPassword().equals(confirmPassword)) {
-//	        model.addAttribute("errorMessage", "Passwords do not match.");
-//	        return "register";
-//	    }
-//	    
-//	    UniqueUser uniqueUser = new UniqueUser();
-//	    uniqueUser.setUsername(chatUser.getEmail());
-//	    uniqueUser.setPassword(encoder.encode(chatUser.getPassword()));
-//	    uniqueUser.setEnabled(true);
-//	    uniqueUserService.saveUniqueUser(uniqueUser);
-//	    
-//	    List<Role> roles = roleService.findAll();
-//	    uniqueUser.setRoles(roles);
-//	    
-//	    chatUser.setUniqueUser(uniqueUser);
-//	    chatUserService.saveChatUser(chatUser);
-//	    
-//	    return "redirect:/login";
-//	}
 	@PostMapping("/register")
 	public String registerSubmit(@ModelAttribute("user") UniqueUser user, @RequestParam("nickName") String nickName, ModelMap model) {
 		System.out.println("jestuser"+user.toString());

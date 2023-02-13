@@ -117,28 +117,7 @@ public class LoginAndRegisterControllerTest {
 				.andExpect(model().attribute("currentUser", chatUserOpt.get()));
 	}
 
-//	@WithMockUser(username = "testuser")
-//	@Test
-//	public void testRegisterSubmit_Unsuccesfull_Name_exist() throws Exception {
-//		UniqueUser user = new UniqueUser();
-//		user.setName("testuser");
-//		user.setEmailAdress("testuser@email.com");
-//		user.setPassword("password");
-//
-//		Role role = new Role();
-//		role.setRoleName("User");
-//
-//		when(defaultUniqueUserDetailsService.findByUniqueUserEmile("testuser@email.com")).thenReturn(user);
-//		when(roleService.findByRoleName("User")).thenReturn(role);
-//		when(encoder.encode("password")).thenReturn("encoded_password");
-//		doNothing().when(defaultUniqueUserDetailsService).saveUniqueUser(user);
-//
-//		mockMvc.perform(post("/register")
-//
-//				.param("name", "testuser").param("emailAdress", "testuser@email.com").param("password", "password"))
-//				.andExpect(status().isOk()).andExpect(view().name("register"))
-//				.andExpect(model().attributeExists("message"));
-//	}
+
 
 	 @Test
 	  public void testRegisterSubmitSuccess() throws Exception {
