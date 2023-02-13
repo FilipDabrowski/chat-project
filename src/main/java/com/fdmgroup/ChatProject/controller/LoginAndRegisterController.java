@@ -2,28 +2,21 @@ package com.fdmgroup.ChatProject.controller;
 
 import java.util.Optional;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fdmgroup.ChatProject.model.Chat;
 import com.fdmgroup.ChatProject.model.ChatUser;
-import com.fdmgroup.ChatProject.model.Role;
 import com.fdmgroup.ChatProject.model.UniqueUser;
 import com.fdmgroup.ChatProject.security.DefaultUniqueUserDetailsService;
-import com.fdmgroup.ChatProject.service.ChatService;
-import com.fdmgroup.ChatProject.service.ChatUserService;
 import com.fdmgroup.ChatProject.service.RoleService;
 import com.fdmgroup.ChatProject.service.UniqueUserService;
 import com.fdmgroup.ChatProject.service.interfaces.IChatUserService;
@@ -35,21 +28,17 @@ public class LoginAndRegisterController {
 	@Autowired
 	DefaultUniqueUserDetailsService defaultUniqueUserDetailsService;
 
-	//@Autowired
-	//IChatUserService chatUserService;
+	@Autowired
+	IChatUserService chatUserService;
 
 	@Autowired
-	IUniqueUserService iUniqueUserService;
+	IUniqueUserService uniqueUserService;
 
 	@Autowired
 	private PasswordEncoder encoder;
 	
 	@Autowired
 	RoleService roleService;
-	@Autowired
-	UniqueUserService uniqueUserService;
-	@Autowired
-	ChatUserService chatUserService;
 
 //	@GetMapping(value = "/")
 //	public String goToIndex() {
@@ -81,61 +70,22 @@ public class LoginAndRegisterController {
 		return "register";
 	}
 
-	
-	
-//	@PostMapping("/register")
-//	public String registerUser(@ModelAttribute ChatUser chatUser, @RequestParam("confirmPassword") String confirmPassword, Model model) {
-//		
-//	    ChatUser existingChatUser = chatUserService.findByNickName(chatUser.getNickName()).get();
-//	    if (existingChatUser != null) {
-//	        model.addAttribute("errorMessage", "Email already exists.");
-//	        return "register";
-//	    }
-//	    
-//	    if (!chatUser.getPassword().equals(confirmPassword)) {
-//	        model.addAttribute("errorMessage", "Passwords do not match.");
-//	        return "register";
-//	    }
-//	    
-//	    UniqueUser uniqueUser = new UniqueUser();
-//	    uniqueUser.setUsername(chatUser.getEmail());
-//	    uniqueUser.setPassword(encoder.encode(chatUser.getPassword()));
-//	    uniqueUser.setEnabled(true);
-//	    uniqueUserService.saveUniqueUser(uniqueUser);
-//	    
-//	    List<Role> roles = roleService.findAll();
-//	    uniqueUser.setRoles(roles);
-//	    
-//	    chatUser.setUniqueUser(uniqueUser);
-//	    chatUserService.saveChatUser(chatUser);
-//	    
-//	    return "redirect:/login";
-//	}
 	@PostMapping("/register")
-	public String registerSubmit(@ModelAttribute("user") UniqueUser user, @RequestParam("nickName") String nickName, ModelMap model) {
-		System.out.println("jestuser"+user.toString());
-		Optional<ChatUser> existingChatUserOpt = chatUserService.findByNickName(nickName);
+	public String registerSubmit(@ModelAttribute("user") UniqueUser user, ModelMap model) {
 		
-		//userFromDatabase.getEmailAdress().equals(user.getEmailAdress()
-		//UniqueUser userFromDatabase = defaultUniqueUserDetailsService.findByUniqueUserEmile(user.getEmailAdress());
-		System.out.println("witam");
-		Optional<ChatUser> chatUserOpt = chatUserService.findByNickName(nickName);
-		if (existingChatUserOpt.isPresent()) {
-        model.addAttribute("errorMessage", "Email already exists.");
-        return "register";
+		UniqueUser userFromDatabase = defaultUniqueUserDetailsService.findByUniqueUserEmile(user.getEmailAdress());
+		
+		if (userFromDatabase != null && userFromDatabase.getEmailAdress().equals(user.getEmailAdress())) {
+			model.addAttribute("message", "This user name already exists");
+			return "register";
 		}
-
-		UniqueUser uniqueUser = new UniqueUser(encoder.encode(user.getPassword()),user.getName(), user.getEmailAdress(),new Role("User"));
-		
-		uniqueUserService.save(uniqueUser);
-		System.out.println("user has been saved");
-		ChatUser chatUser = new ChatUser(nickName, uniqueUser);
-		chatUserService.save(chatUser);
-		System.out.println("chat user has been saved");
-
-		return "indexChat";
-		
-	
+		else {
+		user.setRole(roleService.findByRoleName("Customer"));
+		user.setPassword(encoder.encode(user.getPassword()));
+		defaultUniqueUserDetailsService.saveUniqueUser(user);
+		// model.addAttribute("chatusers", defaultUniqueUserDetailsService.());
+		return "index";
+	}
 	}
 	
 	@ExceptionHandler(UsernameNotFoundException.class)

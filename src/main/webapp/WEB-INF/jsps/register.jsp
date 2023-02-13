@@ -65,50 +65,45 @@ input[type="submit"] {
 </style>
 </head>
 <body>
-	<div class="container">
+		<div class="container">
 
-		<h3>Register</h3>
-		<p>Please fill in this form to create an account.</p>
+			<h3>Register</h3>
+			<p>Please fill in this form to create an account.</p>
 
-		<div class="form-container">
-			<form action="/register" method="post">
-				<div>
-					<label for="nickName">NickName:</label> <input type="text"
-						name="nickName" placeholder="nick name">
-				</div>
-				<div>
-					<label for="emailAdress">Email:</label> <input type="text"
-						name="emailAdress" placeholder="Email">
-				</div>
-				<div>
-					<label for="password">Password:</label> <input type="password"
-						name="password" placeholder="Password">
-				</div>
-				<div>
-					<label for="confirm-password">Confirm Password:</label> <input
-						type="password" name="confirmPassword" placeholder="Password">
-				</div>
-				<div>
-					<label for="name">Name and Surname:</label> <input type="text"
-						name="name" placeholder="Real name">
-				</div>
+			<div class="form-container">
+				<form action="/register" method="post">
+					<div>
+						<label for="nickName">NickName:</label> <input type="text"
+							name="nickName" placeholder="nick name">
+					</div>
+										<div>
+						<label for="mailAddress">Email:</label> <input type="text"
+							name="mailAddress" placeholder="Email">
+					</div>
+					<div>
+						<label for="password">Password:</label> <input type="password"
+							name="password" placeholder="Password">
+					</div>
+					<div>
+						<label for="confirm-password">Confirm Password:</label> <input type="password"
+							name="confirmPassword" placeholder="Password">
+					</div>
+					<div>
+						<label for="realName">Name and Surname:</label> <input type="text"
+							name="realName" placeholder="Name and Surname">
+					</div>
 
-				<div>
-					<input type="submit" value="Submit">
-				</div>
-				<div class="error">
-					<p>
-						<c:if test="${errorMessage}">${errorMessage}</c:if>
-					</p>
-				</div>
-				<div class="container signin">
-					<p>
-						Already have an account? <a href="/login">login here</a>
-					</p>
-				</div>
-			</form>
+					<div>
+						<input type="submit" value="Submit">
+					</div>
+					<div class="container signin">
+						<p>
+							Already have an account? <a href="/login">login here</a>
+						</p>
+					</div>
+				</form>
+			</div>
 		</div>
-	</div>
 </body>
 </html>
 
