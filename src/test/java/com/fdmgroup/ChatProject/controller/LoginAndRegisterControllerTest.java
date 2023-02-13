@@ -7,8 +7,11 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -114,51 +117,74 @@ public class LoginAndRegisterControllerTest {
 				.andExpect(model().attribute("currentUser", chatUserOpt.get()));
 	}
 
-	@WithMockUser(username = "testuser")
-	@Test
-	public void testRegisterSubmit_Unsuccesfull_Name_exist() throws Exception {
-		UniqueUser user = new UniqueUser();
-		user.setName("testuser");
-		user.setEmailAdress("testuser@email.com");
-		user.setPassword("password");
+//	@WithMockUser(username = "testuser")
+//	@Test
+//	public void testRegisterSubmit_Unsuccesfull_Name_exist() throws Exception {
+//		UniqueUser user = new UniqueUser();
+//		user.setName("testuser");
+//		user.setEmailAdress("testuser@email.com");
+//		user.setPassword("password");
+//
+//		Role role = new Role();
+//		role.setRoleName("User");
+//
+//		when(defaultUniqueUserDetailsService.findByUniqueUserEmile("testuser@email.com")).thenReturn(user);
+//		when(roleService.findByRoleName("User")).thenReturn(role);
+//		when(encoder.encode("password")).thenReturn("encoded_password");
+//		doNothing().when(defaultUniqueUserDetailsService).saveUniqueUser(user);
+//
+//		mockMvc.perform(post("/register")
+//
+//				.param("name", "testuser").param("emailAdress", "testuser@email.com").param("password", "password"))
+//				.andExpect(status().isOk()).andExpect(view().name("register"))
+//				.andExpect(model().attributeExists("message"));
+//	}
 
-		Role role = new Role();
-		role.setRoleName("User");
+	 @Test
+	  public void testRegisterSubmitSuccess() throws Exception {
+		 UniqueUser user = new UniqueUser("password", "usertest@test.com", "usertest", new Role("User"));
+	    String nickName = "johndoe";
+	    Optional<ChatUser> existingChatUserOpt = Optional.empty();
+	    Optional<ChatUser> chatUserOpt = Optional.empty();
 
-		when(defaultUniqueUserDetailsService.findByUniqueUserEmile("testuser@email.com")).thenReturn(user);
-		when(roleService.findByRoleName("User")).thenReturn(role);
-		when(encoder.encode("password")).thenReturn("encoded_password");
-		doNothing().when(defaultUniqueUserDetailsService).saveUniqueUser(user);
+	    when(chatUserService.findByNickName(nickName)).thenReturn(existingChatUserOpt);
+	    when(encoder.encode("password")).thenReturn("encoded_password");
 
-		mockMvc.perform(post("/register")
+	    mockMvc.perform(post("/register")
+	        .param("nickName", nickName)
+	        .param("user.emailAdress", user.getEmailAdress())
+	        .param("user.name", user.getName())
+	        .param("user.password", user.getPassword()))
+	        .andExpect(status().isOk())
+	        .andExpect(view().name("indexChat"));
 
-				.param("name", "testuser").param("emailAdress", "testuser@email.com").param("password", "password"))
-				.andExpect(status().isOk()).andExpect(view().name("register"))
-				.andExpect(model().attributeExists("message"));
-	}
+	    verify(uniqueUserService,atLeastOnce()).save(any(UniqueUser.class));
+	    verify(chatUserService,atLeastOnce()).save(any(ChatUser.class));
 
-	@WithMockUser(username = "testuser")
-	@Test
-	public void testRegisterSubmit_Succesfull() throws Exception {
-		UniqueUser user = new UniqueUser();
-		user.setName("testuser");
-		user.setEmailAdress("testuser@email.com");
-		user.setPassword("password");
-		
-		Role role = new Role();
-		role.setRoleName("User");
+	  }
 
-		when(defaultUniqueUserDetailsService.findByUniqueUserEmile("testuser@email.com")).thenReturn(null);
-		when(roleService.findByRoleName("User")).thenReturn(role);
-		when(encoder.encode("password")).thenReturn("encoded_password");
-		doNothing().when(defaultUniqueUserDetailsService).saveUniqueUser(user);
+	 @Test
+	  public void testRegisterSubmitFaliure() throws Exception {
+	    UniqueUser user = new UniqueUser("password", "usertest@test.com", "usertest", new Role("User"));
+	    String nickName = "usernick";
+	    Optional<ChatUser> existingChatUserOpt = Optional.of(new ChatUser());
+	    Optional<ChatUser> chatUserOpt = Optional.empty();
 
-		mockMvc.perform(post("/register")
+	    when(chatUserService.findByNickName(nickName)).thenReturn(existingChatUserOpt);
+	    when(encoder.encode("password")).thenReturn("encoded_password");
 
-				.param("name", "testuser").param("emailAdress", "testuser@email.com").param("password", "password"))
-				.andExpect(status().isOk()).andExpect(view().name("index"))
-				.andExpect(model().attributeDoesNotExist("message"));
-	}
-	
-	
+	    mockMvc.perform(post("/register")
+	        .param("nickName", nickName)
+	        .param("user.emailAdress", user.getEmailAdress())
+	        .param("user.name", user.getName())
+	        .param("user.password", user.getPassword()))
+	        .andExpect(status().isOk())
+	        .andExpect(model().attributeExists("errorMessage"))
+	        .andExpect(model().attribute("errorMessage", "Email already exists."))
+	        .andExpect(view().name("register"));
+
+	    verify(uniqueUserService,never()).save(any(UniqueUser.class));
+	    verify(chatUserService,never()).save(any(ChatUser.class));
+
+	  }
 }
